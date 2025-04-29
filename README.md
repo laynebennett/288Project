@@ -23,15 +23,16 @@ or step on each others toes.
 To do this, make sure that you use the cd command to enter the folder for the repo (ie "cd [folder name]". Once you're in, if you're using git bash, there should be a blue
 piece of text that tells you what branch you're in. At this point, it should say "(main)").
 
-Now to actually create the branch. You can do this one of two ways.
-    First, go to github and next to the the button that shows the name of the current branch, there will be another button that says "X branches". Click this, and click the
-    green "new branch" button. This will pull up a text box to name the branch and a dropdown to select the source branch. You should be safe to assume the source branch will
-    always be main, unless you are making a sub branch of another branch. Leave it as main (unless otherwise you need a sub branch), and name your branch (try to name it based
-    on whatever feature you are working on. i.e. if you're working on the UART, name it something to do with UART). Go back to the terminal and run "git fetch origin" just to
-    be sure that the branch is updated locally on your machine, and then use "git checkout [branch name]" to switch your working directory to your new branch.
+Now to actually create the branch. You can do this one of two ways:
 
-    Second, if you want to do it through terminal, write "git checkout -b [branch name]" using the same naming convention as outlined in the first option. This will create and
-    change your terminal directory to your new branch. Then, run "git push --set-upstream origin [branch name]" to push the branch to the cloud repo.
+First, go to github and next to the the button that shows the name of the current branch, there will be another button that says "X branches". Click this, and click the
+green "new branch" button. This will pull up a text box to name the branch and a dropdown to select the source branch. You should be safe to assume the source branch will
+always be main, unless you are making a sub branch of another branch. Leave it as main (unless otherwise you need a sub branch), and name your branch (try to name it based
+on whatever feature you are working on. i.e. if you're working on the UART, name it something to do with UART). Go back to the terminal and run "git fetch origin" just to
+be sure that the branch is updated locally on your machine, and then use "git checkout [branch name]" to switch your working directory to your new branch.
+
+Second, if you want to do it through terminal, write "git checkout -b [branch name]" using the same naming convention as outlined in the first option. This will create and
+change your terminal directory to your new branch. Then, run "git push --set-upstream origin [branch name]" to push the branch to the cloud repo.
 
 If you want to switch back and forth between branches, just use "git checkout [branch name]". Please make sure that you are on the correct branch when making changes.
 
