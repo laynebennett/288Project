@@ -16,11 +16,13 @@
 #include "uart-interrupt.h"
 #include <stdbool.h>
 #include "driverlib/interrupt.h"
+#include "movement.h"
 
 // These variables are declared as examples for your use in the interrupt handler.
 volatile char command_byte = 115; // byte value for special character used as a command
 volatile int command_flag = 0; // flag to tell the main program a special command was received
 volatile char input = 0; // Whatever is input by the putty user
+volatile bool keyPress = false; // tracks if key wasd key has been pressed
 
 void uart_interrupt_init(void){
   //enable clock to GPIO port B
@@ -158,18 +160,38 @@ void UART1_Handler(void)
         {
             //send a newline character back to PuTTY
             uart_sendChar('\n');
-        }
-        else
-        {
-            //AS NEEDED
+        }else{
+
             //code to handle any other special characters
             //code to update global shared variables
             //DO NOT PUT TIME-CONSUMING CODE IN AN ISR
-
+                
+            //forward
+            if(byte_received == 'w'){
+                set_wheels(10, 10);
+            }
+            //turn left
+            else if(byte_received == 'a'){
+                set_wheels(10, -10);
+            }
+            //backward
+            else if(byte_received == 's'){
+                set_wheels(-10, -10);
+            }
+            //turn right
+            else if(byte_received == 'd'){
+                set_wheels(-10, 10);
+            //stop (CHANGE TO SET BYTE ONCE GUI IS DONE)
+            }else if(byte_received == ' '){
+                set_wheels(0,0);
+            }
             if (byte_received == command_byte)
             {
               command_flag = 1;
             }
         }
+        
+        
+        
     }
 }

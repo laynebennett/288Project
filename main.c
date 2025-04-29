@@ -21,12 +21,9 @@ int main(void)
     uart_interrupt_init();
     servo_init();
 
-    servo_move(90);
-    timer_waitMillis(500);
-    servo_move(30);
-    timer_waitMillis(500);
-    servo_move(150);
-    timer_waitMillis(500);
-    servo_move(90);
+    while(1){
+        
+    }
+
     return 0;
 }

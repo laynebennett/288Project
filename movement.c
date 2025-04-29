@@ -91,3 +91,9 @@ double turn_left(oi_t *sensor_data, double degrees){
 
     return 0;
 }
+
+void set_wheels(double right, double left){
+
+    oi_setWheels(right,left);
+
+}
