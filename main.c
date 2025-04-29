@@ -21,6 +21,8 @@ int main(void)
     uart_interrupt_init();
     servo_init();
 
+    music(1, 1);
+
     servo_move(90);
     timer_waitMillis(500);
     servo_move(30);
