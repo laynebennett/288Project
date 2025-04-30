@@ -22,7 +22,6 @@ int main(void)
     servo_init();
 
     supply();
-    music(1, 1);
 
     servo_move(90);
     timer_waitMillis(500);
