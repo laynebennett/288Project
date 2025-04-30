@@ -21,6 +21,7 @@ int main(void)
     uart_interrupt_init();
     servo_init();
 
+    music(1,0); // Play despacito (Add to a running loop later)
     supply();
 
     servo_move(90);
