@@ -25,6 +25,7 @@ int void supply()
     music(0,1);
 
     // SEND TO PUTTY: Tacos stocked, begin selling
+}
 
 int void supplyCustomers()
 {
