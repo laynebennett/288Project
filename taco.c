@@ -15,47 +15,50 @@ int tacos = 0;
 bool curb = false;
 bool customerFound = false;
 
-int supply()
+int void supply()
 {
     // At start fill up on 3, display 3 Tacos to the LCD
-    tacos += 3;
+    tacos = 3;
     lcd_printf("Tacos: " + tacos);
-    // Wait until the curb is found
-    if(curb)
+
+    // Play resupply jingle
+    music(0,1);
+
+    // SEND TO PUTTY: Tacos stocked, begin selling
+
+int void supplyCustomers()
+{
+    while(customerFound && tacos > 0)
     {
-        // Scan for customers
+        // Scan for another customer
+
         if(customerFound)
         {
-            while(customerFound && tacos > 0)
+            // When a customer is scanned in, decrement 1 taco
+            tacos - 1;
+            lcd_printf("Tacos: " + tacos);
+
+            if(tacos == 0)
             {
-                if(customerFound)
-                {
-                    // When a customer is scanned in, decrement 1 taco
-                    tacos - 1;
-                    lcd_printf("Tacos: " + tacos);
+                // if there is 0 tacos remaining, display, "Returning for re-supply"
+                lcd_printf("Returning for re-supply")
 
-                    if(tacos == 0)
-                    {
-                        // if there is 0 tacos remaining, display, "Returning for re-supply"
-                        lcd_printf("Returning for re-supply")
-
-                        // Execute re-supply measure
-                    }
-                }
+                // SEND TO PUTTY: "return for re-supply"
             }
         }
-
-        if(!customerFound)
+        else
         {
-            lcd_printf("No customers found, scanning again for customers");
+            // SEND TO PUTTY: "No customers found, do one more rescan to confirm"
+
+            // Scan once more
+
+            if(!customerFound)
+            {
+                // SEND TO PUTTY: "No customers confirmed, return to end your shift"
+                break;
+            }
         }
     }
-
-    // if a cliff is detected, display "Re-supplying tacos..."
-     
-    // Play a confirmation sound once taco's are refilled
-
-    // Set taco count to 3 on LCD
 }
 
 void music(int play_despacito, int play_home_jingle) {
