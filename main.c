@@ -22,7 +22,7 @@ int main(void)
     servo_init();
 
     music(1,0); // Play despacito (Add to a running loop later)
-    supply();
+    supplyBot();
 
     servo_move(90);
     timer_waitMillis(500);

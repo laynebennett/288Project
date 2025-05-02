@@ -15,7 +15,7 @@ int tacos = 0;
 bool curb = false;
 bool customerFound = false;
 
-int void supply()
+int void supplyBot()
 {
     // At start fill up on 3, display 3 Tacos to the LCD
     tacos = 3;
@@ -25,6 +25,7 @@ int void supply()
     music(0,1);
 
     // SEND TO PUTTY: Tacos stocked, begin selling
+    uart_sendStr("Tacos stocked, begin selling");
 }
 
 int void supplyCustomers()
@@ -39,23 +40,26 @@ int void supplyCustomers()
             tacos - 1;
             lcd_printf("Tacos: " + tacos);
 
-            if(tacos == 0)
+            if(tacos <= 0)
             {
                 // if there is 0 tacos remaining, display, "Returning for re-supply"
                 lcd_printf("Returning for re-supply")
 
                 // SEND TO PUTTY: "return for re-supply"
+                uart_sendStr("Return for re-supply");
             }
         }
         else
         {
             // SEND TO PUTTY: "No customers found, do one more rescan to confirm"
+            uart_sendStr("No customers found, do one more rescan to confirm");
 
             // Scan once more
 
             if(!customerFound)
             {
                 // SEND TO PUTTY: "No customers confirmed, return to end your shift"
+                uart_sendStr("No customers confirmed, return to end your shift");
                 break;
             }
         }
