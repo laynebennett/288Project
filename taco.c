@@ -29,9 +29,11 @@ int void supplyBot()
 
 int void supplyCustomers()
 {
+    // Scan for initial customer
+
     while(customerFound && tacos > 0)
     {
-        // Scan for another customer
+        // Scan for another customer to ensure it is there
 
         if(customerFound)
         {
