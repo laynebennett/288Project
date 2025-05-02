@@ -24,6 +24,9 @@ int main(void)
     music(1,0); // Play despacito (Add to a running loop later)
     supplyBot();
 
+    if(bumo)
+    (())
+
     servo_move(90);
     timer_waitMillis(500);
     servo_move(30);
