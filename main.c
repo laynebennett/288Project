@@ -1,0 +1,91 @@
+/**
+ * main.c lab 10
+ */
+#include<stdio.h>
+#include <math.h>
+#include "Timer.h"
+#include "lcd.h"
+#include "open_interface.h"
+#include <stdbool.h>
+#include "driverlib/interrupt.h"
+#include "adc.h"
+#include "ping.h"
+#include "servo.h"
+#include "uart-interrupt.h"
+#include "movement.h"
+
+#define TOTAL_DEG_TURN 180
+#define DEGREE_INCREMENT 2
+#define MIN_DISTANCE 50
+
+float get_IR_Dist(float scanDist[], int i);
+
+void printWholeString(char puttyString[]);
+
+int main(void)
+{
+    // Initializations and calibrations
+    lcd_init();
+    timer_init();
+    uart_interrupt_init();
+    adc_init();
+    servo_init();
+   // oi_t *sensor_data = oi_alloc();
+    //oi_init(sensor_data);
+    oi_uartInit();
+    //servo_init();
+
+    while(1){
+
+
+
+
+        if(command_flag == 1){
+            //oi_free(sensor_data);
+            break;
+        }else if(command_flag == 2){
+            command_flag == 1;
+            char puttyString[100];
+
+            float scanDist[4] = {MIN_DISTANCE, MIN_DISTANCE, MIN_DISTANCE, MIN_DISTANCE};
+            float distAvg;
+
+
+            sprintf(puttyString, "\n");
+            printWholeString(puttyString);
+
+            int i;
+            for( i = 0; i <= TOTAL_DEG_TURN; i+= DEGREE_INCREMENT ){
+
+                distAvg = get_IR_Dist(scanDist, 90);
+
+                sprintf(puttyString, "%i %f\n", distAvg);
+                printWholeString(puttyString);
+
+            }
+
+        }
+
+    }
+
+    return 0;
+}
+
+float get_IR_Dist(float scanDist[], int i){
+
+        servo_move(i);
+
+        float IR_Distval = -5.745863 + (10206970 + 5.745863)/(1 + pow( adc_read() /0.00007989898, 0.7910138));
+        //y = 39.46278 + (4084.141 - 39.46278)/(1 + (x/8.054943))
+
+        return IR_Distval;
+
+}
+
+void printWholeString(char puttyString[]){
+    int i;
+    for(i=0;i<strlen(puttyString);i++){
+        uart_sendChar(puttyString[i]);
+    }
+
+}
