@@ -1,6 +1,7 @@
 /**
  * taco.h
- * Header for taco.c functionality
+ * Header file for taco.c
+ * Updates taco and delivery related information
  */
 
 #include "movement.h"
@@ -17,17 +18,16 @@
 #include "servo.h"
 
 /**
- * Calls when the bot reaches home to restock
+ * Logic for supplying the bot at home
  */
-int void supplyBot();
+int void supplyBot()
 
 /**
- * Logic to supply customers with a taco when available.
- * Scans after each customer is served.
+ * Logic for scanning customers and supplying customers
  */
-int void supplyCustomers();
+int void supplyCustomers()
 
 /**
- * Music to be played
+ * Music library
  */
-void music(int play_despacito, int play_home_jingle);
+void music(int play_despacito, int play_home_jingle)
