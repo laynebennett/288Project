@@ -13,12 +13,11 @@
 #include "servo.h"
 #include "uart-interrupt.h"
 #include "movement.h"
+#include "scan.h"
 
 #define TOTAL_DEG_TURN 180
 #define DEGREE_INCREMENT 2
 //#define MIN_DISTANCE 50
-
-float get_IR_Dist(int i);
 
 void printWholeString(char puttyString[]);
 
@@ -34,7 +33,8 @@ int main(void)
     //oi_init(sensor_data);
     oi_uartInit();
     //servo_init();
-
+    char puttyString[100];
+    
     while(1){
 
 
@@ -43,11 +43,9 @@ int main(void)
         if(command_flag == 1){
             //oi_free(sensor_data);
             break;
-        }else if(command_flag == 2){
+        }else if(command_flag == 2){ //long scan (use for object measurement)
             command_flag == 1;
-            char puttyString[100];
-
-
+            
             float distAvg;
 
 
@@ -64,6 +62,26 @@ int main(void)
 
             }
 
+            break;
+
+        }else if(command_flag == 3){ //fast scan (use when no objects visible)
+            command_flag == 1;
+
+            float distAvg;
+
+
+            sprintf(puttyString, "\n");
+            printWholeString(puttyString);
+
+            int i;
+            for( i = 0; i <= TOTAL_DEG_TURN; i+= DEGREE_INCREMENT*5){
+
+                distAvg = get_IR_Dist(i);
+
+                sprintf(puttyString, "%i %f\n", i, distAvg);
+                printWholeString(puttyString);
+
+            }
         }
 
     }
@@ -71,16 +89,6 @@ int main(void)
     return 0;
 }
 
-float get_IR_Dist(int i){
-
-        servo_move(i);
-
-        float IR_Distval = -5.745863 + (10206970 + 5.745863)/(1 + pow( adc_read() /0.00007989898, 0.7910138));
-        //y = 39.46278 + (4084.141 - 39.46278)/(1 + (x/8.054943))
-
-        return IR_Distval;
-
-}
 
 void printWholeString(char puttyString[]){
     int i;

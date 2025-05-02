@@ -195,7 +195,9 @@ void UART1_Handler(void)
             }else if(byte_received == 'e')
             {
               command_flag = 2;
-
+            }else if(byte_received == 'q')
+            {
+                command_flag = 3;
             }else{
               command_flag = 0;
             }

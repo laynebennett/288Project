@@ -6,6 +6,7 @@
 "./movement.obj"
 "./open_interface.obj"
 "./ping.obj"
+"./scan.obj"
 "./servo.obj"
 "./tm4c123gh6pm_startup_ccs.obj"
 "./uart-interrupt.obj"
