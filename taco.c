@@ -46,7 +46,7 @@ int void supplyCustomers()
                 lcd_printf("Returning for re-supply")
 
                 // SEND TO PUTTY: "return for re-supply"
-                uart_sendStr("Return for re-supply");
+                uart_sendStr("Tacos = 0. Return for re-supply");
             }
         }
         else
