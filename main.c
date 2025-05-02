@@ -37,9 +37,6 @@ int main(void)
     
     while(1){
 
-
-
-
         if(command_flag == 1){
             //oi_free(sensor_data);
             break;
