@@ -16,9 +16,9 @@
 
 #define TOTAL_DEG_TURN 180
 #define DEGREE_INCREMENT 2
-#define MIN_DISTANCE 50
+//#define MIN_DISTANCE 50
 
-float get_IR_Dist(float scanDist[], int i);
+float get_IR_Dist(int i);
 
 void printWholeString(char puttyString[]);
 
@@ -47,7 +47,7 @@ int main(void)
             command_flag == 1;
             char puttyString[100];
 
-            float scanDist[4] = {MIN_DISTANCE, MIN_DISTANCE, MIN_DISTANCE, MIN_DISTANCE};
+
             float distAvg;
 
 
@@ -57,9 +57,9 @@ int main(void)
             int i;
             for( i = 0; i <= TOTAL_DEG_TURN; i+= DEGREE_INCREMENT ){
 
-                distAvg = get_IR_Dist(scanDist, 90);
+                distAvg = get_IR_Dist(i);
 
-                sprintf(puttyString, "%i %f\n", distAvg);
+                sprintf(puttyString, "%i %f\n", i, distAvg);
                 printWholeString(puttyString);
 
             }
@@ -71,7 +71,7 @@ int main(void)
     return 0;
 }
 
-float get_IR_Dist(float scanDist[], int i){
+float get_IR_Dist(int i){
 
         servo_move(i);
 
