@@ -6,13 +6,12 @@
 #include "Timer.h"
 #include "lcd.h"
 #include "driverlib/interrupt.h"
-#include<stdio.h>
+#include <stdio.h>
 #include <stdbool.h>
 #include "adc.h"
 #include "servo.h"
 
 int tacos = 0;
-bool curb = false;
 bool customerFound = false;
 
 int void supplyBot()
