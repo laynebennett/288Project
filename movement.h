@@ -41,9 +41,14 @@ double move_backward(oi_t *sensor_data, double distance_mm);
 double turn_right(oi_t *sensor_data, double degrees);
 
 /*
- * Turn da robot right
+ * Turn da robot left
  *
  * oi_t *sensor_data is the data in the robot
  * double degrees is how many degrees da robot turn
  */
 double turn_left(oi_t *sensor_data, double degrees);
+
+/*
+* Brings set wheels function to movement for use instead of needing open_interface 
+*/
+double set_wheels(double right, double left);

@@ -16,6 +16,7 @@
 #include "uart-interrupt.h"
 #include <stdbool.h>
 #include "driverlib/interrupt.h"
+#include "movement.h"
 
 // These variables are declared as examples for your use in the interrupt handler.
 volatile char command_byte = 115; // byte value for special character used as a command
@@ -136,7 +137,7 @@ void uart_sendStr(const char *data){
 
     }
 }
-// Interrupt handler for receive interrupts
+// Interrupt handler for receive interrupts NEED TO FIX
 void UART1_Handler(void)
 {
     char byte_received;
@@ -158,18 +159,51 @@ void UART1_Handler(void)
         {
             //send a newline character back to PuTTY
             uart_sendChar('\n');
-        }
-        else
-        {
-            //AS NEEDED
+        }else{
+
             //code to handle any other special characters
             //code to update global shared variables
             //DO NOT PUT TIME-CONSUMING CODE IN AN ISR
-
-            if (byte_received == command_byte)
+                
+            
+            switch(byte_received) {
+                //forward
+                case 'w':
+                    set_wheels(250, 250); //set_wheels(50, 50);
+                    break;
+                //turn left
+                case 'a':
+                    set_wheels(250, -250); //set_wheels(50, -50);
+                    break;
+                //backward
+                case 's':
+                    set_wheels(-250, -250); //set_wheels(-50, -50);
+                    break;
+                //turn right
+                case 'd':
+                    set_wheels(-250, 250); //set_wheels(-50, 50);
+                    break;
+                //stop (CHANGE TO SET BYTE ONCE GUI IS DONE)
+                case ' ':
+                    set_wheels(0,0); //set_wheels(0,0);
+                    break;
+            }
+            
+            if (byte_received == 't')
             {
               command_flag = 1;
+            }else if(byte_received == 'e')
+            {
+              command_flag = 2;
+            }else if(byte_received == 'q')
+            {
+                command_flag = 3;
+            }else{
+              command_flag = 0;
             }
         }
+        
+        
+        
     }
 }
