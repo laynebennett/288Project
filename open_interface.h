@@ -157,7 +157,6 @@ void oi_setLeds(uint8_t play_led, uint8_t advance_led, uint8_t power_color, uint
 /// \param linear velocity in mm/s values range from -500 -> 500 of left wheel
 void oi_setWheels(int16_t right_wheel, int16_t left_wheel);
 
-
 /// \brief Load song sequence
 /// \param An integer value from 0 - 15 that acts as a label for note sequence
 /// \param An integer value from 1 - 16 indicating the number of notes in the sequence

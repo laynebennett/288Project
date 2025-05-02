@@ -328,6 +328,7 @@ void oi_setWheels(int16_t right_wheel, int16_t left_wheel)
     oi_uartSendChar(left_wheel & 0xff);
 }
 
+
 /// \brief Load song sequence
 /// \param An integer value from 0 - 15 that acts as a label for note sequence
 /// \param An integer value from 1 - 16 indicating the number of notes in the
