@@ -31,6 +31,9 @@ taco.obj: ../adc.h
 taco.obj: ../servo.h
 taco.obj: ../servo.h
 taco.obj: ../button.h
+taco.obj: ../uart-interrupt.h
+taco.obj: ../taco.h
+taco.obj: ../movement.h
 
 ../taco.c:
 
@@ -93,4 +96,10 @@ C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/interrupt.h:
 ../servo.h:
 
 ../button.h:
+
+../uart-interrupt.h:
+
+../taco.h:
+
+../movement.h:
 

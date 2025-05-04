@@ -30,21 +30,20 @@ int main(void)
     uart_interrupt_init();
     adc_init();
     servo_init();
-   // oi_t *sensor_data = oi_alloc();
-    //oi_init(sensor_data);
+
     oi_uartInit();
-    //servo_init();
+
     char puttyString[100];
     bool curbFound = false;
+
     oi_t *sensor_data = oi_alloc();
+
     oi_init(sensor_data);
     
     supplyBot();
 
     while(1){
 
-<<<<<<< HEAD
-=======
         oi_update(sensor_data);
 
         if (sensor_data -> bumpLeft != 0 || sensor_data -> bumpRight != 0)
@@ -55,7 +54,6 @@ int main(void)
         }
 
 
->>>>>>> cdcdb433fab4eb6615ed66349b5726d471aaf75c
         if(command_flag == 1){
             //oi_free(sensor_data);
             break;

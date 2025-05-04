@@ -10,9 +10,13 @@
 #include <stdbool.h>
 #include "adc.h"
 #include "servo.h"
+#include "uart-interrupt.h"
+#include "taco.h"
 
 int tacos = 0;
 bool customerFound = false;
+
+
 
 void supplyBot()
 {
@@ -38,7 +42,7 @@ void supplyCustomers()
         if(customerFound)
         {
             // When a customer is scanned in, decrement 1 taco
-            tacos - 1;
+            tacos--;
             lcd_printf("Tacos: " + tacos);
 
             if(tacos <= 0)
