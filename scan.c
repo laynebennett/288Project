@@ -19,6 +19,15 @@ in control of scanning IR and PING values
 #include "putty.h"
 
 
+struct Object { //struct for each object found
+
+                float width;
+                float angle;
+                float widthCM;
+                float distance;
+                float distances[];
+            };
+
 float get_IR_Dist(int i){
 
     servo_move(i);
@@ -39,6 +48,8 @@ float get_PING_Dist(int i){
 }
 
 void fullScan(int speed, int totalDeg, int increment){ //NEEDS IMPLEMENTATION FOR OBBJECT WIDTH, DISTANCE, ETC
+
+
 
     printWholeString("\n");
     char printString[100];
