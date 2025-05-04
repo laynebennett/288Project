@@ -20,6 +20,7 @@
 //#define MIN_DISTANCE 50
 
 void printWholeString(char puttyString[]);
+bool curbFound = false;
 
 int main(void)
 {
@@ -37,6 +38,19 @@ int main(void)
     
     while(1){
 
+<<<<<<< HEAD
+=======
+        oi_update(sensor_data);
+
+        if (sensor_data -> bumpLeft != 0 || sensor_data -> bumpRight != 0)
+        {
+            curbFound = true;
+            supplyCustomers();
+            curbfound = false;
+        }
+
+
+>>>>>>> cdcdb433fab4eb6615ed66349b5726d471aaf75c
         if(command_flag == 1){
             //oi_free(sensor_data);
             break;

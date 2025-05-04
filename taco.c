@@ -6,13 +6,12 @@
 #include "Timer.h"
 #include "lcd.h"
 #include "driverlib/interrupt.h"
-#include<stdio.h>
+#include <stdio.h>
 #include <stdbool.h>
 #include "adc.h"
 #include "servo.h"
 
 int tacos = 0;
-bool curb = false;
 bool customerFound = false;
 
 int void supplyBot()
@@ -30,9 +29,11 @@ int void supplyBot()
 
 int void supplyCustomers()
 {
+    // Scan for initial customer
+
     while(customerFound && tacos > 0)
     {
-        // Scan for another customer
+        // Scan for another customer to ensure it is there
 
         if(customerFound)
         {
