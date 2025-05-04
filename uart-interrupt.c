@@ -199,7 +199,7 @@ void UART1_Handler(void)
             {
                 command_flag = 3;
             }else{
-              command_flag = 0;
+              command_flag = 4;
             }
         }
         

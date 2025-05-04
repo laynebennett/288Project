@@ -34,6 +34,8 @@ taco.obj: ../button.h
 taco.obj: ../uart-interrupt.h
 taco.obj: ../taco.h
 taco.obj: ../movement.h
+taco.obj: ../scan.h
+taco.obj: ../movement.h
 
 ../taco.c:
 
@@ -100,6 +102,10 @@ C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/interrupt.h:
 ../uart-interrupt.h:
 
 ../taco.h:
+
+../movement.h:
+
+../scan.h:
 
 ../movement.h:
 

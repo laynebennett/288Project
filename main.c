@@ -49,35 +49,43 @@ int main(void)
         if (sensor_data -> bumpLeft != 0 || sensor_data -> bumpRight != 0)
         {
             curbFound = true;
+
+            //move back a bit and stop the bot. needed so the bump doesn't re-trigger
+            set_wheels(-100,-100);
+            timer_waitMillis(500);
+            set_wheels(0,0);
+
             supplyCustomers();
+
             curbFound = false;
         }
 
 
         if(command_flag == 1){
-            //oi_free(sensor_data);
+
             break;
         }else if(command_flag == 2){ //long scan (use for object measurement)
-            command_flag == 1;
+            command_flag = 0;
             
             //float distAvg;
 
             fullScan(1, TOTAL_DEG_TURN, DEGREE_INCREMENT);
 
-            break;
+            //break;
 
         }else if(command_flag == 3){ //fast scan (use when no objects visible)
-            command_flag == 1;
+            command_flag = 0;
 
             //float distAvg;
 
             fullScan(5, TOTAL_DEG_TURN, DEGREE_INCREMENT);
 
-            break;
+            //break;
         }
 
     }
 
+    oi_free(sensor_data);
     return 0;
 }
 

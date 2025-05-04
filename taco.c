@@ -12,6 +12,7 @@
 #include "servo.h"
 #include "uart-interrupt.h"
 #include "taco.h"
+#include "scan.h"
 
 int tacos = 0;
 bool customerFound = false;
@@ -34,7 +35,14 @@ void supplyBot()
 
 void supplyCustomers()
 {
+
     // Scan for initial customer
+
+    fullScan(1, 180, 2);
+
+    //TEMPORARY----------------------------------------------------------------------------------------------------------------------------
+    customerFound = true;
+    //REMOVE WHEN CUSTOMER SCANNING IMPLEMENTED--------------------------------------------------------------------------------------
 
     while(customerFound && tacos > 0)
     {
@@ -42,9 +50,13 @@ void supplyCustomers()
 
         if(customerFound)
         {
+
+            music(1,0);
+
             // When a customer is scanned in, decrement 1 taco
             tacos--;
-            lcd_printf("Tacos: " + tacos);
+            lcd_printf("Tacos: %i", tacos);
+            timer_waitMillis(1000);
 
             if(tacos <= 0)
             {
@@ -62,6 +74,8 @@ void supplyCustomers()
 
             // Scan once more
 
+            fullScan(1, 180, 2);
+
             if(!customerFound)
             {
                 // SEND TO PUTTY: "No customers confirmed, return to end your shift"
@@ -69,19 +83,22 @@ void supplyCustomers()
                 break;
             }
         }
+
+        fullScan(1, 180, 2);
+
     }
 }
 
 void music(int play_despacito, int play_home_jingle) {
     // "Despacito" melody snippet (16-note limit)
     unsigned char despacito_notes[16] = {
-        76, 74, 72, 71, 72, 74, 76, 74,
-        72, 71, 72, 74, 76, 76, 74, 72
+        74, 73, 71, 66, 66, 66, 66, 66,
+        66, 71, 71, 71, 71, 69, 71, 67
     };
 
     unsigned char despacito_durations[16] = {
-        16, 16, 16, 16, 16, 16, 16, 16,
-        16, 16, 16, 16, 16, 8, 8, 16
+        32, 32, 16, 16, 8, 8, 8, 8,
+        8, 8, 8, 8, 16, 8, 16, 24
     };
 
     // Fun home-base jingle (6 notes)

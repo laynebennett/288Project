@@ -38,7 +38,7 @@ float get_PING_Dist(int i){
     return ping_getDistance();
 }
 
-void fullScan(int speed, int totalDeg, int increment){
+void fullScan(int speed, int totalDeg, int increment){ //NEEDS IMPLEMENTATION FOR OBBJECT WIDTH, DISTANCE, ETC
 
     printWholeString("\n");
     char printString[100];

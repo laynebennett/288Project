@@ -53,7 +53,7 @@ void servo_init(void){
 void servo_move(uint16_t degrees){
     unsigned int lowCycles = leftVal - ((leftVal-rightVal)/180)*degrees;
 
-    lcd_printf("%d", lowCycles);
+    //lcd_printf("%d", lowCycles);
 
     TIMER1_TBMATCHR_R = (lowCycles & 0xFFFF);
     TIMER1_TBPMR_R = lowCycles>>16;
