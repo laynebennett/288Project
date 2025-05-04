@@ -32,6 +32,12 @@ scan.obj: ../servo.h
 scan.obj: ../button.h
 scan.obj: ../uart-interrupt.h
 scan.obj: ../movement.h
+scan.obj: ../putty.h
+scan.obj: ../movement.h
+scan.obj: ../scan.h
+scan.obj: ../movement.h
+scan.obj: ../taco.h
+scan.obj: ../movement.h
 
 ../scan.c:
 
@@ -94,6 +100,18 @@ C:/ti/ccs1271/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/stdlib.h:
 ../button.h:
 
 ../uart-interrupt.h:
+
+../movement.h:
+
+../putty.h:
+
+../movement.h:
+
+../scan.h:
+
+../movement.h:
+
+../taco.h:
 
 ../movement.h:
 

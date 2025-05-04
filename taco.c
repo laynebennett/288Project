@@ -22,7 +22,8 @@ void supplyBot()
 {
     // At start fill up on 3, display 3 Tacos to the LCD
     tacos = 3;
-    lcd_printf("Tacos: " + tacos);
+    lcd_clear();
+    lcd_printf("Tacos: %i", tacos);
 
     // Play resupply jingle
     music(0,1);

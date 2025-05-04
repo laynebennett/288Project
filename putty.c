@@ -1,6 +1,10 @@
-/**
- * Header file for scan.c
+/*
+ * putty.c
+ *
+ *  Created on: May 3, 2025
+ *      Author: layneben
  */
+
 #include<stdio.h>
 #include <math.h>
 #include "Timer.h"
@@ -13,18 +17,14 @@
 #include "servo.h"
 #include "uart-interrupt.h"
 #include "movement.h"
+#include "scan.h"
+#include "taco.h"
+
+void printWholeString(char puttyString[]){
+    int i;
+    for(i=0;i<strlen(puttyString);i++){
+        uart_sendChar(puttyString[i]);
+    }
+}
 
 
-
-/**
-Returns IR dist given the angle of the servo, i
-
-*/
-float get_IR_Dist(int i);
-
-/**
-Returns PING dist given the angle of the servo, i
- */
-float get_PING_Dist(int i);
-
-void fullScan(int speed, int totalDeg, int increment);

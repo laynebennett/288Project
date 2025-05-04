@@ -18,6 +18,7 @@ ORDERED_OBJS += \
 "./movement.obj" \
 "./open_interface.obj" \
 "./ping.obj" \
+"./putty.obj" \
 "./scan.obj" \
 "./servo.obj" \
 "./taco.obj" \
@@ -154,8 +155,8 @@ FINAL.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)
-	-$(RM) "Timer.obj" "adc.obj" "button.obj" "lcd.obj" "main.obj" "movement.obj" "open_interface.obj" "ping.obj" "scan.obj" "servo.obj" "taco.obj" "tm4c123gh6pm_startup_ccs.obj" "uart-interrupt.obj" 
-	-$(RM) "Timer.d" "adc.d" "button.d" "lcd.d" "main.d" "movement.d" "open_interface.d" "ping.d" "scan.d" "servo.d" "taco.d" "tm4c123gh6pm_startup_ccs.d" "uart-interrupt.d" 
+	-$(RM) "Timer.obj" "adc.obj" "button.obj" "lcd.obj" "main.obj" "movement.obj" "open_interface.obj" "ping.obj" "putty.obj" "scan.obj" "servo.obj" "taco.obj" "tm4c123gh6pm_startup_ccs.obj" "uart-interrupt.obj" 
+	-$(RM) "Timer.d" "adc.d" "button.d" "lcd.d" "main.d" "movement.d" "open_interface.d" "ping.d" "putty.d" "scan.d" "servo.d" "taco.d" "tm4c123gh6pm_startup_ccs.d" "uart-interrupt.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

@@ -16,6 +16,7 @@ in control of scanning IR and PING values
 #include "servo.h"
 #include "uart-interrupt.h"
 #include "movement.h"
+#include "putty.h"
 
 
 float get_IR_Dist(int i){
@@ -35,4 +36,18 @@ float get_PING_Dist(int i){
     servo_move(i);
 
     return ping_getDistance();
+}
+
+void fullScan(int speed, int totalDeg, int increment){
+
+    printWholeString("\n");
+    char printString[100];
+
+        int i;
+        for( i = 0; i <= totalDeg; i+= increment*speed){
+
+            sprintf(printString, "%i %f\n", i, get_IR_Dist(i));
+            printWholeString(printString);
+
+        }
 }

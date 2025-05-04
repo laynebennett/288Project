@@ -15,12 +15,12 @@
 #include "movement.h"
 #include "scan.h"
 #include "taco.h"
+#include "putty.h"
 
 #define TOTAL_DEG_TURN 180
 #define DEGREE_INCREMENT 2
 //#define MIN_DISTANCE 50
 
-void printWholeString(char puttyString[]);
 
 int main(void)
 {
@@ -60,42 +60,18 @@ int main(void)
         }else if(command_flag == 2){ //long scan (use for object measurement)
             command_flag == 1;
             
-            float distAvg;
+            //float distAvg;
 
-
-            sprintf(puttyString, "\n");
-            printWholeString(puttyString);
-
-            int i;
-            for( i = 0; i <= TOTAL_DEG_TURN; i+= DEGREE_INCREMENT ){
-
-                distAvg = get_IR_Dist(i);
-
-                sprintf(puttyString, "%i %f\n", i, distAvg);
-                printWholeString(puttyString);
-
-            }
+            fullScan(1, TOTAL_DEG_TURN, DEGREE_INCREMENT);
 
             break;
 
         }else if(command_flag == 3){ //fast scan (use when no objects visible)
             command_flag == 1;
 
-            float distAvg;
+            //float distAvg;
 
-
-            sprintf(puttyString, "\n");
-            printWholeString(puttyString);
-
-            int i;
-            for( i = 0; i <= TOTAL_DEG_TURN; i+= DEGREE_INCREMENT*5){
-
-                distAvg = get_IR_Dist(i);
-
-                sprintf(puttyString, "%i %f\n", i, distAvg);
-                printWholeString(puttyString);
-
-            }
+            fullScan(5, TOTAL_DEG_TURN, DEGREE_INCREMENT);
 
             break;
         }
@@ -106,10 +82,3 @@ int main(void)
 }
 
 
-void printWholeString(char puttyString[]){
-    int i;
-    for(i=0;i<strlen(puttyString);i++){
-        uart_sendChar(puttyString[i]);
-    }
-
-}

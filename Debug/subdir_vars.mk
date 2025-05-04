@@ -17,6 +17,7 @@ C_SRCS += \
 ../movement.c \
 ../open_interface.c \
 ../ping.c \
+../putty.c \
 ../scan.c \
 ../servo.c \
 ../taco.c \
@@ -32,6 +33,7 @@ C_DEPS += \
 ./movement.d \
 ./open_interface.d \
 ./ping.d \
+./putty.d \
 ./scan.d \
 ./servo.d \
 ./taco.d \
@@ -47,6 +49,7 @@ OBJS += \
 ./movement.obj \
 ./open_interface.obj \
 ./ping.obj \
+./putty.obj \
 ./scan.obj \
 ./servo.obj \
 ./taco.obj \
@@ -62,6 +65,7 @@ OBJS__QUOTED += \
 "movement.obj" \
 "open_interface.obj" \
 "ping.obj" \
+"putty.obj" \
 "scan.obj" \
 "servo.obj" \
 "taco.obj" \
@@ -77,6 +81,7 @@ C_DEPS__QUOTED += \
 "movement.d" \
 "open_interface.d" \
 "ping.d" \
+"putty.d" \
 "scan.d" \
 "servo.d" \
 "taco.d" \
@@ -92,6 +97,7 @@ C_SRCS__QUOTED += \
 "../movement.c" \
 "../open_interface.c" \
 "../ping.c" \
+"../putty.c" \
 "../scan.c" \
 "../servo.c" \
 "../taco.c" \
