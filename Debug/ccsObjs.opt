@@ -8,6 +8,7 @@
 "./ping.obj"
 "./scan.obj"
 "./servo.obj"
+"./taco.obj"
 "./tm4c123gh6pm_startup_ccs.obj"
 "./uart-interrupt.obj"
 "../tm4c123gh6pm.cmd"

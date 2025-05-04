@@ -14,7 +14,7 @@
 int tacos = 0;
 bool customerFound = false;
 
-int void supplyBot()
+void supplyBot()
 {
     // At start fill up on 3, display 3 Tacos to the LCD
     tacos = 3;
@@ -27,7 +27,7 @@ int void supplyBot()
     uart_sendStr("Tacos stocked, begin selling");
 }
 
-int void supplyCustomers()
+void supplyCustomers()
 {
     // Scan for initial customer
 
@@ -44,7 +44,7 @@ int void supplyCustomers()
             if(tacos <= 0)
             {
                 // if there is 0 tacos remaining, display, "Returning for re-supply"
-                lcd_printf("Returning for re-supply")
+                lcd_printf("Returning for re-supply");
 
                 // SEND TO PUTTY: "return for re-supply"
                 uart_sendStr("Tacos = 0. Return for re-supply");
