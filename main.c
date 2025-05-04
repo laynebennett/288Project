@@ -14,13 +14,13 @@
 #include "uart-interrupt.h"
 #include "movement.h"
 #include "scan.h"
+#include "taco.h"
 
 #define TOTAL_DEG_TURN 180
 #define DEGREE_INCREMENT 2
 //#define MIN_DISTANCE 50
 
 void printWholeString(char puttyString[]);
-bool curbFound = false;
 
 int main(void)
 {
@@ -35,7 +35,12 @@ int main(void)
     oi_uartInit();
     //servo_init();
     char puttyString[100];
+    bool curbFound = false;
+    oi_t *sensor_data = oi_alloc();
+    oi_init(sensor_data);
     
+    supplyBot();
+
     while(1){
 
         oi_update(sensor_data);
@@ -44,7 +49,7 @@ int main(void)
         {
             curbFound = true;
             supplyCustomers();
-            curbfound = false;
+            curbFound = false;
         }
 
 

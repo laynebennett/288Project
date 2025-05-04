@@ -19,6 +19,7 @@ C_SRCS += \
 ../ping.c \
 ../scan.c \
 ../servo.c \
+../taco.c \
 ../tm4c123gh6pm_startup_ccs.c \
 ../uart-interrupt.c 
 
@@ -33,6 +34,7 @@ C_DEPS += \
 ./ping.d \
 ./scan.d \
 ./servo.d \
+./taco.d \
 ./tm4c123gh6pm_startup_ccs.d \
 ./uart-interrupt.d 
 
@@ -47,6 +49,7 @@ OBJS += \
 ./ping.obj \
 ./scan.obj \
 ./servo.obj \
+./taco.obj \
 ./tm4c123gh6pm_startup_ccs.obj \
 ./uart-interrupt.obj 
 
@@ -61,6 +64,7 @@ OBJS__QUOTED += \
 "ping.obj" \
 "scan.obj" \
 "servo.obj" \
+"taco.obj" \
 "tm4c123gh6pm_startup_ccs.obj" \
 "uart-interrupt.obj" 
 
@@ -75,6 +79,7 @@ C_DEPS__QUOTED += \
 "ping.d" \
 "scan.d" \
 "servo.d" \
+"taco.d" \
 "tm4c123gh6pm_startup_ccs.d" \
 "uart-interrupt.d" 
 
@@ -89,6 +94,7 @@ C_SRCS__QUOTED += \
 "../ping.c" \
 "../scan.c" \
 "../servo.c" \
+"../taco.c" \
 "../tm4c123gh6pm_startup_ccs.c" \
 "../uart-interrupt.c" 
 

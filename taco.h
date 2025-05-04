@@ -20,14 +20,14 @@
 /**
  * Logic for supplying the bot at home
  */
-int void supplyBot()
+void supplyBot();
 
 /**
  * Logic for scanning customers and supplying customers
  */
-int void supplyCustomers()
+void supplyCustomers();
 
 /**
  * Music library
  */
-void music(int play_despacito, int play_home_jingle)
+void music(int play_despacito, int play_home_jingle);
