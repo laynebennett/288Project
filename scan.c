@@ -46,7 +46,7 @@ float get_PING_Dist(int i){
     return ping_getDistance();
 }
 
-void fullScan(int speed, int totalDeg, int increment, int time_ms){ //NEEDS IMPLEMENTATION FOR OBBJECT WIDTH, DISTANCE, ETC
+void fullScan(int interval, int totalDeg, int increment, int time_ms){ //NEEDS IMPLEMENTATION FOR OBBJECT WIDTH, DISTANCE, ETC
 
 
 
@@ -54,7 +54,7 @@ void fullScan(int speed, int totalDeg, int increment, int time_ms){ //NEEDS IMPL
     char printString[100];
 
         int i;
-        for( i = 0; i <= totalDeg; i+= increment*speed){
+        for( i = 0; i <= totalDeg; i+= increment*interval){
 
             sprintf(printString, "%i %f\n", i, get_IR_Dist(i));
             printWholeString(printString);

@@ -71,7 +71,7 @@ int main(void)
             printWholeString(puttyString);
 
 
-        }else if(update_flag){
+        }else{
 
             oi_update(sensor_data);
 
@@ -113,7 +113,7 @@ int main(void)
                                 uart_sendStr("Border Front Right!\n");
 
                             }else{
-                                uart_sendStr("Border!\n");
+                                uart_sendStr("Hole!\n");
                             }
 
                         }
