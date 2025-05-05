@@ -32,7 +32,6 @@ float get_IR_Dist(int i){
 
     servo_move(i);
 
-    timer_waitMillis(100);
 
     float IR_Distval = -5.745863 + (10206970 + 5.745863)/(1 + pow( adc_read() /0.00007989898, 0.7910138));
     //y = 39.46278 + (4084.141 - 39.46278)/(1 + (x/8.054943))
@@ -47,7 +46,7 @@ float get_PING_Dist(int i){
     return ping_getDistance();
 }
 
-void fullScan(int speed, int totalDeg, int increment){ //NEEDS IMPLEMENTATION FOR OBBJECT WIDTH, DISTANCE, ETC
+void fullScan(int speed, int totalDeg, int increment, int time_ms){ //NEEDS IMPLEMENTATION FOR OBBJECT WIDTH, DISTANCE, ETC
 
 
 
@@ -59,6 +58,8 @@ void fullScan(int speed, int totalDeg, int increment){ //NEEDS IMPLEMENTATION FO
 
             sprintf(printString, "%i %f\n", i, get_IR_Dist(i));
             printWholeString(printString);
+
+            timer_waitMillis(time_ms);
 
         }
 }

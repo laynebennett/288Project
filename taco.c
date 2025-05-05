@@ -37,7 +37,7 @@ void supplyCustomers()
 
     // Scan for initial customer
 
-    fullScan(1, 180, 2);
+    fullScan(1, 180, 2, 100);
 
     //TEMPORARY----------------------------------------------------------------------------------------------------------------------------
     customerFound = true;
@@ -73,7 +73,7 @@ void supplyCustomers()
 
             // Scan once more
 
-            fullScan(1, 180, 2);
+            fullScan(1, 180, 2, 100);
 
             if(!customerFound)
             {
@@ -83,7 +83,7 @@ void supplyCustomers()
             }
         }
 
-        fullScan(1, 180, 2);
+        fullScan(1, 180, 2, 100);
 
     }
 }

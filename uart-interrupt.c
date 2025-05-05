@@ -22,6 +22,7 @@
 volatile char command_byte = 115; // byte value for special character used as a command
 volatile int command_flag = 0; // flag to tell the main program a special command was received
 volatile char input = 0; // Whatever is input by the putty user
+volatile int update_flag = 1; //should fix bug where oi_update would try to trigger too soon after ISR
 
 void uart_interrupt_init(void){
   //enable clock to GPIO port B
@@ -154,6 +155,9 @@ void UART1_Handler(void)
         input = byte_received;
         uart_sendChar(byte_received);
 
+
+        update_flag = 0;
+
         //if byte received is a carriage return
         if (byte_received == '\r')
         {
@@ -198,9 +202,15 @@ void UART1_Handler(void)
             }else if(byte_received == 'q')
             {
                 command_flag = 3;
+            }else if(byte_received == 'h')
+            {
+                command_flag = 4;
             }else{
-              command_flag = 4;
+              command_flag = 0;
             }
+
+            update_flag = 1;
+
         }
         
         
