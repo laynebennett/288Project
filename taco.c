@@ -6,15 +6,16 @@
 #include "Timer.h"
 #include "lcd.h"
 #include "driverlib/interrupt.h"
-#include <stdio.h>
+#include<stdio.h>
 #include <stdbool.h>
 #include "adc.h"
 #include "servo.h"
 
 int tacos = 0;
+bool curb = false;
 bool customerFound = false;
 
-int void supplyBot()
+int void supply()
 {
     // At start fill up on 3, display 3 Tacos to the LCD
     tacos = 3;
@@ -24,16 +25,13 @@ int void supplyBot()
     music(0,1);
 
     // SEND TO PUTTY: Tacos stocked, begin selling
-    uart_sendStr("Tacos stocked, begin selling");
 }
 
 int void supplyCustomers()
 {
-    // Scan for initial customer
-
     while(customerFound && tacos > 0)
     {
-        // Scan for another customer to ensure it is there
+        // Scan for another customer
 
         if(customerFound)
         {
@@ -47,20 +45,17 @@ int void supplyCustomers()
                 lcd_printf("Returning for re-supply")
 
                 // SEND TO PUTTY: "return for re-supply"
-                uart_sendStr("Tacos = 0. Return for re-supply");
             }
         }
         else
         {
             // SEND TO PUTTY: "No customers found, do one more rescan to confirm"
-            uart_sendStr("No customers found, do one more rescan to confirm");
 
             // Scan once more
 
             if(!customerFound)
             {
                 // SEND TO PUTTY: "No customers confirmed, return to end your shift"
-                uart_sendStr("No customers confirmed, return to end your shift");
                 break;
             }
         }
