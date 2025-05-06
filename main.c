@@ -70,6 +70,31 @@ int main(void)
             sprintf(puttyString, "%u %u %u %u\n", sensor_data -> cliffLeftSignal, sensor_data -> cliffRightSignal, sensor_data -> cliffFrontLeftSignal, sensor_data -> cliffFrontRightSignal);
             printWholeString(puttyString);
 
+        }else if(command_flag == 5){ //forward
+                    command_flag = 0;
+
+                    set_wheels(250, 250);
+
+        }else if(command_flag == 6){ //turn left
+                    command_flag = 0;
+
+                    set_wheels(100, -100);
+
+        }else if(command_flag == 7){ //backward
+                    command_flag = 0;
+
+                    set_wheels(-250, -250);
+
+        }else if(command_flag == 8){ //turn right
+                    command_flag = 0;
+
+                    set_wheels(-100, 100);
+
+        }else if(command_flag == 9){ //stop
+                    command_flag = 0;
+
+                    set_wheels(0, 0);
+
 
         }else{
 
@@ -123,6 +148,7 @@ int main(void)
                         printWholeString(puttyString);
 
                     }
+
         }
 
     }

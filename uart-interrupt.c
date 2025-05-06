@@ -167,45 +167,36 @@ void UART1_Handler(void)
             //code to handle any other special characters
             //code to update global shared variables
             //DO NOT PUT TIME-CONSUMING CODE IN AN ISR
-                
             
-            switch(byte_received) {
-                //forward
-                case 'w':
-                    set_wheels(250, 250); //set_wheels(50, 50);
-                    break;
-                //turn left
-                case 'a':
-                    set_wheels(250, -250); //set_wheels(50, -50);
-                    break;
-                //backward
-                case 's':
-                    set_wheels(-250, -250); //set_wheels(-50, -50);
-                    break;
-                //turn right
-                case 'd':
-                    set_wheels(-250, 250); //set_wheels(-50, 50);
-                    break;
-                //stop (CHANGE TO SET BYTE ONCE GUI IS DONE)
-                case ' ':
-                    set_wheels(0,0); //set_wheels(0,0);
-                    break;
-            }
-            
-            if (byte_received == 't')
+            if (byte_received == 't')//stop all
             {
               command_flag = 1;
-            }else if(byte_received == 'e')
+            }else if(byte_received == 'e')//regular scan
             {
               command_flag = 2;
-            }else if(byte_received == 'q')
+            }else if(byte_received == 'q')//quick scan
             {
                 command_flag = 3;
-            }else if(byte_received == 'h')
+            }else if(byte_received == 'h')//hole scan
             {
                 command_flag = 4;
-            }else{
-              command_flag = 0;
+            }else if(byte_received == 'w')//forward
+            {
+                command_flag = 5;
+            }else if(byte_received == 'a')//turn left
+            {
+                command_flag = 6;
+            }else if(byte_received == 's')//backward
+            {
+                command_flag = 7;
+            }else if(byte_received == 'd')//turn right
+            {
+                command_flag = 8;
+            }else if(byte_received == ' ')//stop
+            {
+                command_flag = 9;
+            }else{//nothing
+                command_flag = 0;
             }
 
 
