@@ -36,15 +36,29 @@ class cybotGUI:
         btn_frame.pack()
 
         # Movement buttons inside btn_frame
-        self.btn_forward = tk.Button(btn_frame, text="Forward", command=lambda: self.send_command('w'))
-        self.btn_left = tk.Button(btn_frame, text="Left", command=lambda: self.send_command('a'))
-        self.btn_backward = tk.Button(btn_frame, text="Backward", command=lambda: self.send_command('s'))
-        self.btn_right = tk.Button(btn_frame, text="Right", command=lambda: self.send_command('d'))
+        self.btn_forward = tk.Button(btn_frame, text="Forward")
+        self.btn_left = tk.Button(btn_frame, text="Left")
+        self.btn_backward = tk.Button(btn_frame, text="Backward")
+        self.btn_right = tk.Button(btn_frame, text="Right")
+        self.btn_quit = tk.Button(btn_frame, text="Quit", command=self.on_close)
 
         self.btn_forward.grid(row=0, column=1)
         self.btn_left.grid(row=1, column=0)
-        self.btn_backward.grid(row=1, column=1)
+        self.btn_backward.grid(row=2, column=1)
         self.btn_right.grid(row=1, column=2)
+        self.btn_quit.grid(row=3, column=3, padx=10, pady=10, sticky="se")
+
+        self.btn_forward.bind("<ButtonPress-1>", lambda event: self.send_command('w'))
+        self.btn_forward.bind("<ButtonRelease-1>", lambda event: self.send_command('x'))
+
+        self.btn_left.bind("<ButtonPress-1>", lambda event: self.send_command('a'))
+        self.btn_left.bind("<ButtonRelease-1>", lambda event: self.send_command('x'))
+
+        self.btn_backward.bind("<ButtonPress-1>", lambda event: self.send_command('s'))
+        self.btn_backward.bind("<ButtonRelease-1>", lambda event: self.send_command('x'))
+
+        self.btn_right.bind("<ButtonPress-1>", lambda event: self.send_command('d'))
+        self.btn_right.bind("<ButtonRelease-1>", lambda event: self.send_command('x'))
 
         # Start serial reading thread
         self.running = True
