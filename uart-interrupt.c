@@ -192,7 +192,7 @@ void UART1_Handler(void)
             }else if(byte_received == 'd')//turn right
             {
                 command_flag = 8;
-            }else if(byte_received == ' ')//stop
+            }else if(byte_received == 'x')//stop
             {
                 command_flag = 9;
             }else{//nothing
