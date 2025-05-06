@@ -102,11 +102,13 @@ void music(int play_despacito, int play_home_jingle) {
 
     // Fun home-base jingle (6 notes)
     unsigned char home_notes[6] = {
-        60, 64, 67, 72, 76, 72
+        60, 60, 60, 65, 69, 60, 60, 60,
+        65, 69, 65, 65, 64, 64, 62, 62, 60     
     };
 
     unsigned char home_durations[6] = {
-        16, 16, 16, 16, 8, 8
+        8, 8, 8, 16, 16, 8, 8, 8, 16, 32,
+        8, 8, 8, 8, 8, 8, 8
     };
 
     // Load both songs into Roomba memory
