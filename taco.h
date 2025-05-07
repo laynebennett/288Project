@@ -30,4 +30,4 @@ void supplyCustomers();
 /**
  * Music library
  */
-void music(int play_despacito, int play_home_jingle);
+void music(int play_despacito, int play_home_jingle, int play_despacito2, int play_despacito3);
