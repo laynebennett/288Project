@@ -29,9 +29,9 @@ float get_PING_Dist(int i);
 
 
 /**
- * Scans from IR
+ * Scans from IR, returns true if obj found
  */
-void fullScan(int speed, int totalDeg, int increment, int time_ms);
+bool fullScan(int speed, int totalDeg, int increment, int time_ms);
 
 
 /**

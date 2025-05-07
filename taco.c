@@ -35,22 +35,21 @@ void supplyBot()
 void supplyCustomers()
 {
 
-    // Scan for initial customer
 
-    fullScan(1, 180, 2, 100);
-
-    //TEMPORARY----------------------------------------------------------------------------------------------------------------------------
-    customerFound = true;
-    //REMOVE WHEN CUSTOMER SCANNING IMPLEMENTED--------------------------------------------------------------------------------------
-
-    while(customerFound && tacos > 0)
+    while(tacos > 0)
     {
         // Scan for another customer to ensure it is there
+
+        if(fullScan(1, 180, 2, 100)){
+            customerFound = true;
+        }else{
+            customerFound = false;
+        }
 
         if(customerFound)
         {
 
-            music(1, 0, 1,1);
+            music(1, 0, 0, 0);
             timer_waitMillis(3630);
             music(0, 0, 1,0);
             timer_waitMillis(2665);
@@ -77,7 +76,11 @@ void supplyCustomers()
 
             // Scan once more
 
-            fullScan(1, 180, 2, 100);
+            if(fullScan(1, 180, 2, 100)){
+                customerFound = true;
+            }else{
+                customerFound = false;
+            }
 
             if(!customerFound)
             {
@@ -87,7 +90,7 @@ void supplyCustomers()
             }
         }
 
-        fullScan(1, 180, 2, 100);
+
 
     }
 }

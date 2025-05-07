@@ -28,7 +28,7 @@ struct Object { //struct for each object found
                 float widthCM;
                 float distance;
                 float midAngle;
-                float distances[99];
+                bool customer;
             };
 
 float get_IR_Dist(int i){
@@ -53,7 +53,7 @@ float get_PING_Dist(int i){
 
 
 
-void fullScan(int interval, int totalDeg, int increment, int time_ms){ //NEEDS IMPLEMENTATION FOR OBBJECT WIDTH, DISTANCE, ETC
+bool fullScan(int interval, int totalDeg, int increment, int time_ms){ //NEEDS IMPLEMENTATION FOR OBBJECT WIDTH, DISTANCE, ETC
 
     float scanDist[4] = {MIN_DISTANCE_SCAN, MIN_DISTANCE_SCAN, MIN_DISTANCE_SCAN, MIN_DISTANCE_SCAN};
 
@@ -65,10 +65,14 @@ void fullScan(int interval, int totalDeg, int increment, int time_ms){ //NEEDS I
 
     float objDist;
 
+    float distances[100] = {0};
+
     struct Object objects[10] = {0}; //creates 10 objects
 
     printWholeString("\n");
     char printString[100];
+
+    servo_move(0);
 
     timer_waitMillis(750);
 
@@ -86,6 +90,8 @@ void fullScan(int interval, int totalDeg, int increment, int time_ms){ //NEEDS I
                 printWholeString(printString);
                 objCount++;
 
+                memset(distances, 0, sizeof(distances));//reset array to 0
+
                 objects[objCount].width = 0;
                 objects[objCount].angle = i;
 
@@ -96,7 +102,8 @@ void fullScan(int interval, int totalDeg, int increment, int time_ms){ //NEEDS I
 
                 objDetect = true;
                 objects[objCount].width += increment;
-                objects[objCount].distances[i/increment] = distAvg;
+                //objects[objCount].distances[(int)(i/increment)] = distAvg;
+                distances[i/increment] = distAvg;
 
 
 
@@ -106,53 +113,51 @@ void fullScan(int interval, int totalDeg, int increment, int time_ms){ //NEEDS I
                             printWholeString(printString);
                             objCount--;
                         }
+                        else if(objDetect == true){//finish later
+
+                            objects[objCount].midAngle = (int)(objects[objCount].angle + (objects[objCount].width/2));
+
+                            objects[objCount].distance = distances[(int)(ceil(objects[objCount].midAngle/increment)-(((int)(objects[objCount].midAngle/increment))%2))];
+
+                        }
                             objDetect = false;
                             sprintf(printString, "NO OBJECT\n");
                             printWholeString(printString);
             }
-
+//IF LOOP ENDS ON OBJECT IT WILL NOT UPDATE THE OBJECT INFORMATION CORRECTLY. ADDING IMPLEMENTATION TOMORROW. MAY MAKE SOME CROPPED OBJECT SCAN FUNCTINOALITY
             timer_waitMillis(time_ms);
 
         }
+
+        objects[objCount].midAngle = (int)(objects[objCount].angle + (objects[objCount].width/2));
+
+        objects[objCount].distance = distances[(int)(ceil(objects[objCount].midAngle/increment)-(((int)(objects[objCount].midAngle/increment))%2))];
 
 
         sprintf(printString, "\nobjCount: %i\n\n", objCount);
         printWholeString(printString);
 
-        float minWidthCM = 999;
-        float minAngle = objects[1].angle+(((double)objects[1].width)/2.0);
-
-
 
         int q;
-
         for(q=1;q<=objCount;q++){//FIND SMALLEST OBJECT
 
-            objects[q].midAngle = (int)(objects[q].angle + (objects[q].width/2));
-
-            objects[q].distance = objects[q].distances[(int)ceil(objects[q].midAngle/increment)];
-
-            sprintf(printString, "%f", objects[q].midAngle);
-            printWholeString(printString);
+            objDetect = true;
 
             objects[q].widthCM = 2*objects[q].distance*tan(objects[q].width*(3.14159)/360.0);
+
+            if(objects[q].widthCM < 8){
+                objects[q].customer = true;
+                printWholeString("CUSTOMER FOUND\n");
+            }else{
+                objects[q].customer = false;
+            }
 
             sprintf(printString, "Object %i: Angle = %f, Distance = %f, Width = %fdegrees, WidthCM = %f\n", q, objects[q].midAngle, objects[q].distance, objects[q].width, objects[q].widthCM);
             printWholeString(printString);
 
-            if(objects[q].widthCM<minWidthCM){
-                minWidthCM = objects[q].widthCM;
-                minAngle = objects[q].angle+(((double)objects[q].width)/2.0);
-                objDist = objects[q].distance;
-            }
-
         }
 
-        sprintf(printString, "minAngle: %f\n", minAngle);
-        printWholeString(printString);
-
-
-
+        return objDetect;
 
 }
 
