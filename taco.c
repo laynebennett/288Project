@@ -26,7 +26,7 @@ void supplyBot()
     lcd_printf("Tacos: %i", tacos);
 
     // Play resupply jingle
-    music(0,1);
+    music(0,1,0,0);
 
     // SEND TO PUTTY: Tacos stocked, begin selling
     uart_sendStr("Tacos stocked, begin selling \n");
@@ -50,7 +50,11 @@ void supplyCustomers()
         if(customerFound)
         {
 
-            music(1,0);
+            music(1, 0, 1,1);
+            timer_waitMillis(3630);
+            music(0, 0, 1,0);
+            timer_waitMillis(2665);
+            music(0, 0, 0,1);
 
             // When a customer is scanned in, decrement 1 taco
             tacos--;
@@ -88,7 +92,7 @@ void supplyCustomers()
     }
 }
 
-void music(int play_despacito, int play_home_jingle) {
+void music(int play_despacito, int play_home_jingle, int play_despacito2, int play_despacito3) {
     // "Despacito" melody snippet (16-note limit)
     unsigned char despacito_notes[16] = {
         74, 73, 71, 66, 66, 66, 66, 66,
@@ -98,6 +102,24 @@ void music(int play_despacito, int play_home_jingle) {
     unsigned char despacito_durations[16] = {
         32, 32, 16, 16, 8, 8, 8, 8,
         8, 8, 8, 8, 16, 8, 16, 24
+    };
+
+    unsigned char despacito_notes2[16] = {
+        67, 67, 67, 67, 71, 71, 71, 71,
+        71, 73, 74, 69, 69, 69, 69, 69
+    };
+
+    unsigned char despacito_durations2[16] = {
+        8, 8, 8, 8, 8, 8, 8, 8,
+        16, 8, 16, 32, 8, 8, 8, 8
+    };
+
+    unsigned char despacito_notes3[8] = {
+        69, 74, 74, 74, 74, 76, 76, 73,
+    };
+
+    unsigned char despacito_durations3[8] = {
+        8, 8, 8, 8, 16, 8, 16, 32,
     };
 
     // Fun home-base jingle (6 notes)
@@ -114,11 +136,22 @@ void music(int play_despacito, int play_home_jingle) {
     // Load both songs into Roomba memory
     oi_loadSong(0, 16, despacito_notes, despacito_durations);
     oi_loadSong(1, 16, home_notes, home_durations);
+    oi_loadSong(2, 16, despacito_notes2, despacito_durations2);
+    oi_loadSong(3, 16, despacito_notes3, despacito_durations3);
 
     // Conditionally play one or both songs
     if (play_despacito) {
         oi_play_song(0); // play "Despacito" snippet
     }
+
+    if (play_despacito2) {
+        oi_play_song(2); // play "Despacito2" snippet
+    }
+
+    if (play_despacito3) {
+        oi_play_song(3); // play "Despacito2" snippet
+    }
+
 
     if (play_home_jingle) {
         oi_play_song(1); // play home-base jingle
