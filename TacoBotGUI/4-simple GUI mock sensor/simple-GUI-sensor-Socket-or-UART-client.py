@@ -97,7 +97,7 @@ def send_quick_scan():
 
 def send_command(command_char):
     global gui_send_message
-    gui_send_message = command_char + "\n"
+    gui_send_message = command_char
 
 def append_to_message_box(text):
     message_box.config(state=tk.NORMAL)
