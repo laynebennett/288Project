@@ -67,7 +67,7 @@ int main(void)
         }else if(command_flag == 4){ //print hole values
             command_flag = 0;
 
-            sprintf(puttyString, "%u %u %u %u\n", sensor_data -> cliffLeftSignal, sensor_data -> cliffRightSignal, sensor_data -> cliffFrontLeftSignal, sensor_data -> cliffFrontRightSignal);
+            sprintf(puttyString, "%u %u %u %u\n", sensor_data -> cliffLeftSignal, sensor_data -> cliffFrontLeftSignal, sensor_data -> cliffFrontRightSignal, sensor_data -> cliffRightSignal);
             printWholeString(puttyString);
 
         }else if(command_flag == 5){ //forward
@@ -114,7 +114,7 @@ int main(void)
                         curbFound = false;
                     }
 
-                    if (sensor_data -> cliffLeft != 0 || sensor_data -> cliffRight != 0 || sensor_data -> cliffFrontLeft != 0 || sensor_data -> cliffFrontRight != 0)
+                    if(sensor_data -> cliffLeftSignal < 100 || sensor_data -> cliffRightSignal < 100 || sensor_data -> cliffFrontLeftSignal < 100 || sensor_data -> cliffFrontRightSignal < 100)
                     {
 
                         //move back a bit and stop the bot. needed so the cliff doesn't re-trigger
@@ -122,32 +122,41 @@ int main(void)
                         timer_waitMillis(500);
                         set_wheels(0,0);
 
-                        if(sensor_data -> cliffLeftSignal < 100 || sensor_data -> cliffRightSignal < 100 || sensor_data -> cliffFrontLeftSignal < 100 || sensor_data -> cliffFrontRightSignal < 100){//CHANGE FOR DIFFERENTIATING BETWEEN HOME AND BORDER
-                            supplyBot();
-                        }else{
-                            if(sensor_data -> cliffLeft != 0){
-                                uart_sendStr("Border Left!\n");
+                        supplyBot();
 
-                            }else if(sensor_data -> cliffRight != 0){
-                                uart_sendStr("Border Right!\n");
-
-                            }else if(sensor_data -> cliffFrontLeft != 0){
-                                uart_sendStr("Border Front Left!\n");
-
-                            }else if(sensor_data -> cliffFrontRight != 0){
-                                uart_sendStr("Border Front Right!\n");
-
-                            }else{
-                                uart_sendStr("Hole!\n");
-                            }
-
-                        }
-
+                        uart_sendStr("Hole!\n");
 
                         sprintf(puttyString, "%u %u %u %u\n", sensor_data -> cliffLeftSignal, sensor_data -> cliffRightSignal, sensor_data -> cliffFrontLeftSignal, sensor_data -> cliffFrontRightSignal);
                         printWholeString(puttyString);
 
                     }
+                    /**RE-ENABLE THIS LATER. BOT WILL TRIGGER ON WHITE DOWNSTAIRS FLOOR BUT NOT UPSTAIRS FLOOR. <-----------------------------------------------------
+                    if(sensor_data -> cliffLeftSignal > 2500){
+                        uart_sendStr("Border Left!\n");
+                        set_wheels(-100,-100);
+                        timer_waitMillis(500);
+                        set_wheels(0,0);
+
+                    }if(sensor_data -> cliffRightSignal > 2500){
+                        uart_sendStr("Border Right!\n");
+                        set_wheels(-100,-100);
+                        timer_waitMillis(500);
+                        set_wheels(0,0);
+
+                    }if(sensor_data -> cliffFrontLeftSignal > 2500){
+                        uart_sendStr("Border Front Left!\n");
+                        set_wheels(-100,-100);
+                        timer_waitMillis(500);
+                        set_wheels(0,0);
+
+                    }if(sensor_data -> cliffFrontRightSignal > 2500){
+                        uart_sendStr("Border Front Right!\n");
+                        set_wheels(-100,-100);
+                        timer_waitMillis(500);
+                        set_wheels(0,0);
+
+                    }
+                    */
 
         }
 
