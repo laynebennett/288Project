@@ -76,6 +76,8 @@ bool fullScan(int interval, int totalDeg, int increment, int time_ms){ //NEEDS I
 
     timer_waitMillis(750);
 
+    printWholeString("SCAN_START\n");
+
         int i;
         for( i = 0; i <= totalDeg; i+= increment*interval){
 
@@ -122,7 +124,7 @@ bool fullScan(int interval, int totalDeg, int increment, int time_ms){ //NEEDS I
                         }
                             objDetect = false;
                             //sprintf(printString, "NO OBJECT\n");
-                            sprintf(printString, "%i 50\n",  i);
+                            sprintf(printString, "%i,50\n",  i);
                             printWholeString(printString);
             }
 //IF LOOP ENDS ON OBJECT IT WILL NOT UPDATE THE OBJECT INFORMATION CORRECTLY. ADDING IMPLEMENTATION TOMORROW. MAY MAKE SOME CROPPED OBJECT SCAN FUNCTINOALITY
