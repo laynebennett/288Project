@@ -33,8 +33,8 @@ def main():
 
     fig, ax = plt.subplots(subplot_kw={'projection': 'polar'}, figsize=(6, 5))
     ax.set_title("CyBot Sensor Scan", fontsize=14)
-    ax.set_rmax(100)
-    ax.set_rticks([20, 40, 60, 80, 100])
+    ax.set_rmax(50)
+    ax.set_rticks([10, 20, 30, 40, 50])
     ax.set_rlabel_position(-22.5)
 
     canvas = FigureCanvasTkAgg(fig, master=left_frame)
@@ -67,6 +67,7 @@ def main():
     utility_frame.pack(pady=10)
 
     tk.Button(utility_frame, text="Scan", width=10, command=send_scan).pack(pady=2)
+    tk.Button(utility_frame, text="Quick Scan", width=10, command=send_quick_scan).pack(pady=2)
     tk.Button(utility_frame, text="Quit", width=10, command=send_quit).pack(pady=2)
 
     # Start socket thread
@@ -90,9 +91,13 @@ def send_scan():
     global gui_send_message
     gui_send_message = "e"
 
+def send_quick_scan():
+    global gui_send_message
+    gui_send_message = "q"
+
 def send_command(command_char):
     global gui_send_message
-    gui_send_message = command_char + "\n"
+    gui_send_message = command_char
 
 def append_to_message_box(text):
     message_box.config(state=tk.NORMAL)
@@ -118,11 +123,19 @@ def socket_thread():
     print("Sent to server: " + send_message)
 
     while send_message != 'quit\n':
-        if send_message.strip() == "e":
+        if send_message.strip() in ("e", "q"):
             print("Requested Sensor scan from CyBot:\n")
             scan_lines = []
 
             with open(filename, 'w') as file_object:
+
+                # Wait for SCAN_START
+                while True:
+                    rx_message = cybot.readline()
+                    decoded = rx_message.decode().strip()
+                    if decoded == "SCAN_START":
+                        break
+
                 while True:
                     rx_message = cybot.readline()
                     decoded = rx_message.decode()
@@ -147,6 +160,7 @@ def socket_thread():
 
         while gui_send_message == "wait\n":
             time.sleep(.1)
+
 
         send_message = gui_send_message
         gui_send_message = "wait\n"
@@ -184,10 +198,13 @@ def parse_and_plot_scan_data_polar(lines):
 
     ax.clear()
     ax.set_title("CyBot Sensor Scan", fontsize=14)
-    ax.set_rmax(100)
-    ax.set_rticks([20, 40, 60, 80, 100])
+    ax.set_rmax(50)
+    ax.set_rmin(0)
+    ax.set_rticks([10, 20, 30, 40, 50])
     ax.set_rlabel_position(-22.5)
     ax.plot(angles_rad, distances_np, color='blue', linewidth=2.0, marker='o', markersize=4)
+    ax.set_rmax(50)
+    ax.set_rmin(0)
     canvas.draw()
 
 # Start GUI

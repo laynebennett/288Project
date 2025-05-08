@@ -52,7 +52,7 @@ while True:  # Loop recieving/sending data from/to client until client disconnec
                 break
 
         # Check if a sensor scan command has been sent
-        elif (data.decode() == "M\n") or (data.decode() == "m\n"):
+        elif (data.decode() == "e\n") or (data.decode() == "e"):
 
                 print("Recieved Sensor scan request... sending data:\n")
 
