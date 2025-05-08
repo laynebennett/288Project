@@ -135,8 +135,8 @@ bool fullScan(int interval, int totalDeg, int increment, int time_ms){ //NEEDS I
         objects[objCount].distance = distances[(int)(ceil(objects[objCount].midAngle/increment)-(((int)(objects[objCount].midAngle/increment))%2))];
 
 
-        sprintf(printString, "\nobjCount: %i\n\n", objCount);
-        printWholeString(printString);
+        //sprintf(printString, "\nobjCount: %i\n\n", objCount);
+        //printWholeString(printString);
 
 
         int q;
@@ -148,13 +148,15 @@ bool fullScan(int interval, int totalDeg, int increment, int time_ms){ //NEEDS I
 
             if(objects[q].widthCM < 8){
                 objects[q].customer = true;
-                printWholeString("CUSTOMER FOUND\n");
+                //printWholeString("CUSTOMER FOUND\n");
             }else{
                 objects[q].customer = false;
             }
 
             //sprintf(printString, "Object %i: Angle = %f, Distance = %f, Width = %fdegrees, WidthCM = %f\n", q, objects[q].midAngle, objects[q].distance, objects[q].width, objects[q].widthCM);
             //printWholeString(printString);
+
+            printWholeString("END\n");
 
         }
 
