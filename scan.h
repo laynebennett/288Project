@@ -27,4 +27,14 @@ Returns PING dist given the angle of the servo, i
  */
 float get_PING_Dist(int i);
 
-void fullScan(int speed, int totalDeg, int increment, int time_ms);
+
+/**
+ * Scans from IR, returns true if obj found
+ */
+bool fullScan(int speed, int totalDeg, int increment, int time_ms);
+
+
+/**
+ * gets average of 3 distances [.,x,x,x]
+ */
+float get_avg(float scanDist[], float distance);
