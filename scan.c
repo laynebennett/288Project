@@ -97,7 +97,7 @@ bool fullScan(int interval, int totalDeg, int increment, int time_ms){ //NEEDS I
 
                 }
 
-                sprintf(printString, "%i %f\n",  i, distAvg);
+                sprintf(printString, "%i, %f\n",  i, distAvg);
                 printWholeString(printString);
 
                 objDetect = true;
