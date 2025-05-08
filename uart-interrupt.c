@@ -153,7 +153,7 @@ void UART1_Handler(void)
         byte_received = (char)UART1_DR_R & 0xFF;
         input = byte_received;
         uart_sendChar(byte_received);
-        uart_sendChar('\n');
+
 
 
 
@@ -184,18 +184,23 @@ void UART1_Handler(void)
             }else if(byte_received == 'w')//forward
             {
                 command_flag = 5;
+                uart_sendChar('\n');
             }else if(byte_received == 'a')//turn left
             {
                 command_flag = 6;
+                uart_sendChar('\n');
             }else if(byte_received == 's')//backward
             {
                 command_flag = 7;
+                uart_sendChar('\n');
             }else if(byte_received == 'd')//turn right
             {
                 command_flag = 8;
+                uart_sendChar('\n');
             }else if(byte_received == 'x')//stop
             {
                 command_flag = 9;
+                uart_sendChar('\n');
             }else{//nothing
                 command_flag = 0;
             }
