@@ -153,6 +153,7 @@ void UART1_Handler(void)
         byte_received = (char)UART1_DR_R & 0xFF;
         input = byte_received;
         uart_sendChar(byte_received);
+        uart_sendChar('\n');
 
 
 

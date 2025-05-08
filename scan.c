@@ -158,9 +158,9 @@ bool fullScan(int interval, int totalDeg, int increment, int time_ms){ //NEEDS I
             //sprintf(printString, "Object %i: Angle = %f, Distance = %f, Width = %fdegrees, WidthCM = %f\n", q, objects[q].midAngle, objects[q].distance, objects[q].width, objects[q].widthCM);
             //printWholeString(printString);
 
-            printWholeString("END\n");
-
         }
+
+        printWholeString("END\n");
 
         return objDetect;
 
