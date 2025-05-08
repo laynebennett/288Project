@@ -37,7 +37,7 @@ float get_IR_Dist(int i){
 
 
     float IR_Distval = 0.8 * 2440000 * pow( adc_read() , -1.56);
-    //y = 39.46278 + (4084.141 - 39.46278)/(1 + (x/8.054943))
+
 
     return IR_Distval;
 
@@ -86,8 +86,8 @@ bool fullScan(int interval, int totalDeg, int increment, int time_ms){ //NEEDS I
             if(distAvg < MIN_DISTANCE_SCAN){ //SOMETHING CLOSE
 
                 if(objDetect == false){ //MAKE A NEW OBJECT
-                sprintf(printString, "OBJECT DETECTED\n");
-                printWholeString(printString);
+                //sprintf(printString, "OBJECT DETECTED\n");
+                //printWholeString(printString);
                 objCount++;
 
                 memset(distances, 0, sizeof(distances));//reset array to 0
@@ -97,20 +97,20 @@ bool fullScan(int interval, int totalDeg, int increment, int time_ms){ //NEEDS I
 
                 }
 
-                sprintf(printString, "%f dist %i ang\n", distAvg, i);
+                sprintf(printString, "%i %f\n",  i, distAvg);
                 printWholeString(printString);
 
                 objDetect = true;
                 objects[objCount].width += increment;
-                //objects[objCount].distances[(int)(i/increment)] = distAvg;
+
                 distances[i/increment] = distAvg;
 
 
 
             }else{
                         if((objects[objCount].width <= 10) && (objDetect == true)){//REMOVE PREVIOUS OBJECT, TOO SMALL
-                            sprintf(printString, "OBJECT TOO SMALL\n");
-                            printWholeString(printString);
+                            //sprintf(printString, "OBJECT TOO SMALL\n");
+                            //printWholeString(printString);
                             objCount--;
                         }
                         else if(objDetect == true){//finish later
@@ -121,7 +121,8 @@ bool fullScan(int interval, int totalDeg, int increment, int time_ms){ //NEEDS I
 
                         }
                             objDetect = false;
-                            sprintf(printString, "NO OBJECT\n");
+                            //sprintf(printString, "NO OBJECT\n");
+                            sprintf(printString, "%i 50\n",  i);
                             printWholeString(printString);
             }
 //IF LOOP ENDS ON OBJECT IT WILL NOT UPDATE THE OBJECT INFORMATION CORRECTLY. ADDING IMPLEMENTATION TOMORROW. MAY MAKE SOME CROPPED OBJECT SCAN FUNCTINOALITY
@@ -152,8 +153,8 @@ bool fullScan(int interval, int totalDeg, int increment, int time_ms){ //NEEDS I
                 objects[q].customer = false;
             }
 
-            sprintf(printString, "Object %i: Angle = %f, Distance = %f, Width = %fdegrees, WidthCM = %f\n", q, objects[q].midAngle, objects[q].distance, objects[q].width, objects[q].widthCM);
-            printWholeString(printString);
+            //sprintf(printString, "Object %i: Angle = %f, Distance = %f, Width = %fdegrees, WidthCM = %f\n", q, objects[q].midAngle, objects[q].distance, objects[q].width, objects[q].widthCM);
+            //printWholeString(printString);
 
         }
 
