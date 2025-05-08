@@ -161,6 +161,7 @@ def socket_thread():
         while gui_send_message == "wait\n":
             time.sleep(.1)
 
+
         send_message = gui_send_message
         gui_send_message = "wait\n"
         cybot.write(send_message.encode())
