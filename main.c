@@ -61,34 +61,34 @@ int main(void)
 
             //float distAvg;
 
-            fullScan(1, TOTAL_DEG_TURN, DEGREE_INCREMENT, 0);
+            fullScan(1, TOTAL_DEG_TURN, DEGREE_INCREMENT, 20);
 
             //break;
         }else if(command_flag == 4){ //print hole values
             command_flag = 0;
 
-            sprintf(puttyString, "%u %u %u %u\n", sensor_data -> cliffLeftSignal, sensor_data -> cliffFrontLeftSignal, sensor_data -> cliffFrontRightSignal, sensor_data -> cliffRightSignal);
-            printWholeString(puttyString);
+            //sprintf(puttyString, "%u %u %u %u\n", sensor_data -> cliffLeftSignal, sensor_data -> cliffFrontLeftSignal, sensor_data -> cliffFrontRightSignal, sensor_data -> cliffRightSignal);
+            //printWholeString(puttyString);
 
         }else if(command_flag == 5){ //forward
                     command_flag = 0;
 
-                    set_wheels(250, 250);
+                    set_wheels(150, 150);
 
         }else if(command_flag == 6){ //turn left
                     command_flag = 0;
 
-                    set_wheels(100, -100);
+                    set_wheels(50, -50);
 
         }else if(command_flag == 7){ //backward
                     command_flag = 0;
 
-                    set_wheels(-250, -250);
+                    set_wheels(-150, -150);
 
         }else if(command_flag == 8){ //turn right
                     command_flag = 0;
 
-                    set_wheels(-100, 100);
+                    set_wheels(-50, 50);
 
         }else if(command_flag == 9){ //stop
                     command_flag = 0;
