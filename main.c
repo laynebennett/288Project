@@ -61,7 +61,7 @@ int main(void)
 
             //float distAvg;
 
-            fullScan(1, TOTAL_DEG_TURN, DEGREE_INCREMENT, 0);
+            fullScan(1, TOTAL_DEG_TURN, DEGREE_INCREMENT, 20);
 
             //break;
         }else if(command_flag == 4){ //print hole values
