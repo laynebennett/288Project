@@ -12,6 +12,9 @@
 "./taco.obj"
 "./tm4c123gh6pm_startup_ccs.obj"
 "./uart-interrupt.obj"
+"./TacoBotGUI/2-simple client server starter code/Simple-CyBot-echo.obj"
+"./TacoBotGUI/3-simple mock sensor client server starter code/Simple-CyBot-echo.obj"
+"./TacoBotGUI/4-simple GUI mock sensor/Simple-CyBot-echo.obj"
 "../tm4c123gh6pm.cmd"
 -llibc.a
 -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib"
