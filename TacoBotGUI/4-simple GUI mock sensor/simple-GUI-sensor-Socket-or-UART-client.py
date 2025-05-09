@@ -9,6 +9,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import numpy as np
 import math
 from queue import Queue
+import queue
 
 # Globals
 gui_send_message = "wait\n"
@@ -22,10 +23,11 @@ message_box = None
 minimap_canvas = None
 cybot_x, cybot_y = 250, 250
 cybot_angle_deg = 90  # 90 is facing right
-step_distance = 4  # cm per step forward
+step_distance = 2.5  # cm per step forward
 movement_threads = {}  # To track active movement per command
 movement_flags = {}  # Control flags for movement threads
 stop_queue = Queue()  # Queue to hold stop commands ("x")
+message_queue = Queue()
 
 def main():
     global window, canvas, ax, message_box, minimap_canvas
@@ -87,7 +89,7 @@ def main():
     tk.Button(utility_frame, text="Quit", width=10, command=send_quit).pack(pady=2)
 
     threading.Thread(target=socket_thread, daemon=True).start()
-    window.after(100, process_stop_queue)  # Start stop queue processor
+    #window.after(100, process_stop_queue)  # Start stop queue processor
     window.mainloop()
 
 def create_control_button(parent, text, command_char, row, col):
@@ -95,6 +97,7 @@ def create_control_button(parent, text, command_char, row, col):
     btn.grid(row=row, column=col)
     btn.bind("<ButtonPress-1>", lambda e: start_movement(command_char))
     btn.bind("<ButtonRelease-1>", lambda e: stop_movement(command_char))
+    
 
 def start_movement(command_char):
     if command_char not in movement_flags or not movement_flags[command_char]:
@@ -107,11 +110,22 @@ def stop_movement(command_char):
     movement_flags[command_char] = False
     stop_queue.put("x")  # Queue "x" for reliable stopping
 
+    process_stop_signal()
+
 def process_stop_queue():
     global gui_send_message
     if not stop_queue.empty() and gui_send_message == "wait\n":
         gui_send_message = stop_queue.get()
     window.after(100, process_stop_queue)
+
+def process_stop_signal():
+    global gui_send_message
+
+    if not stop_queue.empty():
+        gui_send_message = stop_queue.get()
+        # This would trigger the necessary stop action (in your case, "x" would stop the bot)
+        send_command(gui_send_message)
+
 
 def movement_loop(command_char):
     while movement_flags.get(command_char, False):
@@ -121,20 +135,24 @@ def movement_loop(command_char):
 def send_quit():
     global gui_send_message
     gui_send_message = "quit\n"
+    message_queue.put(gui_send_message)
     time.sleep(1)
     window.destroy()
 
 def send_scan():
     global gui_send_message
     gui_send_message = "e"
+    message_queue.put(gui_send_message)
 
 def send_quick_scan():
     global gui_send_message
     gui_send_message = "q"
+    message_queue.put(gui_send_message)
 
 def send_command(command_char):
     global gui_send_message
     gui_send_message = command_char
+    message_queue.put(gui_send_message)
 
 def handle_command(command_char):
     update_minimap(command_char)
@@ -152,9 +170,9 @@ def update_minimap(command_char):
         cybot_x -= step_distance * math.cos(rad)
         cybot_y += step_distance * math.sin(rad)
     elif command_char == "a":
-        cybot_angle_deg = (cybot_angle_deg + 5.69) % 360
+        cybot_angle_deg = (cybot_angle_deg + 6.3) % 360
     elif command_char == "d":
-        cybot_angle_deg = (cybot_angle_deg - 5.69) % 360
+        cybot_angle_deg = (cybot_angle_deg - 6.3) % 360
 
     draw_minimap()
 
@@ -203,7 +221,6 @@ def append_to_message_box(text):
 
 def socket_thread():
     global gui_send_message
-
     scanBool = False
 
     absolute_path = os.path.dirname(__file__)
@@ -213,80 +230,106 @@ def socket_thread():
     HOST = "192.168.1.1"
     PORT = 288
     cybot_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    
     cybot_socket.connect((HOST, PORT))
     cybot = cybot_socket.makefile("rbw", buffering=0)
-
+    cybot_socket.setblocking(False)  # Make socket non-blocking
     send_message = "Hello\n"
     gui_send_message = "wait\n"
     cybot.write(send_message.encode())
     print("Sent to server: " + send_message)
 
     while send_message != 'quit\n':
+        try:
+            # Check for messages from GUI
+            try:
+                gui_send_message = message_queue.get_nowait()
+                if gui_send_message != "wait\n":
+                    send_message = gui_send_message
+                    gui_send_message = "wait\n"
+                    cybot.write(send_message.encode())
+                    print("Sent command:", send_message.strip())
 
-        if send_message.strip() in ("e", "q") or scanBool == True:
-            print("Requested Sensor scan from CyBot:\n")
-            scan_lines = []
-            scan_lines2 = []
-            scanBool = False
+                    if send_message == "e" or send_message == "q":
+                        handle_scan(cybot, filename, filename)
 
-            with open(filename, 'w') as file_object:
-                while True:
-                    rx_message = cybot.readline()
-                    decoded = rx_message.decode().strip()
-                    if decoded == "SCAN_START":
-                        break
+            except queue.Empty:
+                pass
 
-                while True:
-                    rx_message = cybot.readline()
-                    decoded = rx_message.decode()
-                    if decoded.strip() == "END":
-                        break
+            # Check for incoming data from CyBot
+            try:
+                rx_message = cybot.readline()
+                decoded = rx_message.decode().strip()
+                print("Received:", decoded)
+                window.after(0, lambda msg=decoded: append_to_message_box(msg))
 
-                    print(decoded.strip())
-                    file_object.write(decoded)
-                    file_object.flush()
-                    scan_lines.append(decoded)
+                if decoded == "z":
+                    scanBool = True
+                    handle_scan(cybot, filename, filename2)
 
-            with open(filename2, 'w') as file_object:
-                while True:
-                    rx_message = cybot.readline()
-                    decoded = rx_message.decode()
-                    if decoded.strip() == "END2":
-                        break
+            except (socket.error, IOError) as e:
+                # No data available yet
+                pass
 
-                    print(decoded.strip())
-                    file_object.write(decoded)
-                    file_object.flush()
-                    scan_lines2.append(decoded)
+        except Exception as e:
+            print("Error in socket thread:", e)
+            break
 
-            scan_lines_to_plot.clear()
-            scan_lines_to_plot.extend(scan_lines)
-            scan_lines_to_map.clear()
-            scan_lines_to_map.extend(scan_lines2)
-            window.after(0, lambda: parse_and_plot_scan_data_polar(scan_lines_to_plot))
-            window.after(0, lambda: plot_objects_on_minimap(scan_lines_to_map))
-
-
-        else:
-            rx_message = cybot.readline()
-            decoded = rx_message.decode().strip()
-            print("Received:", decoded)
-            window.after(0, lambda msg=decoded: append_to_message_box(msg))
-
-            if decoded == "z":
-                scanBool = True
-
-        while gui_send_message == "wait\n":
-            time.sleep(.05)
-
-        send_message = gui_send_message
-        gui_send_message = "wait\n"
-        cybot.write(send_message.encode())
+        time.sleep(0.05)  # Small sleep to prevent CPU overload
 
     print("Client exiting...")
     time.sleep(2)
     cybot.close()
     cybot_socket.close()
+
+def handle_scan(cybot, filename, filename2):
+    print("Requested Sensor scan from CyBot:")
+    scan_lines = []
+    scan_lines2 = []
+
+    with open(filename, 'w') as file_object:
+        while True:
+            try:
+                rx_message = cybot.readline()
+                decoded = rx_message.decode().strip()
+                if decoded == "SCAN_START":
+                    break
+            except (socket.error, IOError):
+                continue
+
+        while True:
+            try:
+                rx_message = cybot.readline()
+                decoded = rx_message.decode()
+                if decoded.strip() == "END":
+                    break
+                print(decoded.strip())
+                file_object.write(decoded)
+                file_object.flush()
+                scan_lines.append(decoded)
+            except (socket.error, IOError):
+                continue
+
+    with open(filename2, 'w') as file_object:
+        while True:
+            try:
+                rx_message = cybot.readline()
+                decoded = rx_message.decode()
+                if decoded.strip() == "END2":
+                    break
+                print(decoded.strip())
+                file_object.write(decoded)
+                file_object.flush()
+                scan_lines2.append(decoded)
+            except (socket.error, IOError):
+                continue
+
+    scan_lines_to_plot.clear()
+    scan_lines_to_plot.extend(scan_lines)
+    scan_lines_to_map.clear()
+    scan_lines_to_map.extend(scan_lines2)
+    window.after(0, lambda: parse_and_plot_scan_data_polar(scan_lines_to_plot))
+    window.after(0, lambda: plot_objects_on_minimap(scan_lines_to_map))
 
 def plot_objects_on_minimap(scan_lines):
     global minimap_canvas, cybot_x, cybot_y, cybot_angle_deg
@@ -295,7 +338,7 @@ def plot_objects_on_minimap(scan_lines):
         try:
             angle_str, distance_str, diameter_str = line.strip().split(",")
             rel_angle_deg = float(angle_str)
-            distance_cm = float(distance_str) + .5 * float(diameter_str) + 17
+            distance_cm = float(distance_str) + .5 * float(diameter_str) + 10
             diameter_cm = float(diameter_str)
 
             # Convert to absolute angle based on bot's heading

@@ -66,13 +66,13 @@ void supplyCustomers()
                 lcd_printf("Returning for re-supply");
 
                 // SEND TO PUTTY: "return for re-supply"
-                uart_sendStr("Tacos = 0. Return for re-supply ");
+                uart_sendStr("Tacos = 0. Return for re-supply \n");
             }
         }
         else
         {
             // SEND TO PUTTY: "No customers found, do one more rescan to confirm"
-            uart_sendStr("No customers found, do one more rescan to confirm ");
+            uart_sendStr("No customers found, do one more rescan to confirm \n");
 
             // Scan once more
             uart_sendStr("z\n");
@@ -85,7 +85,7 @@ void supplyCustomers()
             if(!customerFound)
             {
                 // SEND TO PUTTY: "No customers confirmed, return to end your shift"
-                uart_sendStr("No customers confirmed, return to end your shift ");
+                uart_sendStr("No customers confirmed, return to end your shift \n");
                 break;
             }
         }

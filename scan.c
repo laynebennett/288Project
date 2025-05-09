@@ -61,6 +61,8 @@ bool fullScan(int interval, int totalDeg, int increment, int time_ms){ //NEEDS I
 
     bool objDetect = false;
 
+    bool customerDetect = false;
+
     int objCount = 0;
 
     float objDist;
@@ -148,8 +150,9 @@ bool fullScan(int interval, int totalDeg, int increment, int time_ms){ //NEEDS I
 
             objects[q].widthCM = 2*objects[q].distance*tan(objects[q].width*(3.14159)/360.0);
 
-            if(objects[q].widthCM < 8){
+            if(objects[q].widthCM < 12){
                 objects[q].customer = true;
+                customerDetect = true;
                 //printWholeString("CUSTOMER FOUND\n");
             }else{
                 objects[q].customer = false;
@@ -165,7 +168,7 @@ bool fullScan(int interval, int totalDeg, int increment, int time_ms){ //NEEDS I
 
         printWholeString("END2\n");
 
-        return objDetect;
+        return customerDetect;
 
 }
 
