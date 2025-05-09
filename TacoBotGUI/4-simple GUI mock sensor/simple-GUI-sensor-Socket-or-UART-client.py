@@ -161,7 +161,7 @@ def update_minimap(command_char):
 def reset_minimap_bot():
     global cybot_x, cybot_y, cybot_angle_deg
     cybot_x, cybot_y = 250, 250
-    cybot_angle_deg = 90
+    cybot_angle_deg = 0
     minimap_objects.clear()
     draw_minimap()
 
@@ -173,10 +173,13 @@ def draw_minimap():
         minimap_canvas.create_line(i, 0, i, 500, fill="#ddd")
         minimap_canvas.create_line(0, i, 500, i, fill="#ddd")
 
-    bot_size = 20
+    bot_size = 17
     minimap_canvas.create_oval(cybot_x - bot_size, cybot_y - bot_size,
                                cybot_x + bot_size, cybot_y + bot_size,
                                fill="red")
+
+    minimap_canvas.create_oval(cybot_x - 50 + 10*math.cos(math.radians(cybot_angle_deg)), cybot_y - 50 - 10*math.sin(math.radians(cybot_angle_deg)),
+                               cybot_x + 50 + 10*math.cos(math.radians(cybot_angle_deg)), cybot_y + 50 - 10*math.sin(math.radians(cybot_angle_deg)))
 
     rad = math.radians(cybot_angle_deg)
     end_x = cybot_x + 15 * math.cos(rad)
@@ -217,7 +220,8 @@ def socket_thread():
     print("Sent to server: " + send_message)
 
     while send_message != 'quit\n':
-        if send_message.strip() in ("e", "q") or decoded == "z":
+
+        if send_message.strip() in ("e", "q"):
             print("Requested Sensor scan from CyBot:\n")
             scan_lines = []
             scan_lines2 = []
@@ -285,7 +289,7 @@ def plot_objects_on_minimap(scan_lines):
         try:
             angle_str, distance_str, diameter_str = line.strip().split(",")
             rel_angle_deg = float(angle_str)
-            distance_cm = float(distance_str) + 20
+            distance_cm = float(distance_str) + .5 * float(diameter_str)
             diameter_cm = float(diameter_str)
 
             # Convert to absolute angle based on bot's heading
@@ -293,8 +297,8 @@ def plot_objects_on_minimap(scan_lines):
             abs_angle_rad = math.radians(abs_angle_deg)
 
             # Convert polar to Cartesian (assuming 1 cm = 1 px for simplicity)
-            obj_y = cybot_x + distance_cm * math.cos(abs_angle_rad)
-            obj_x = cybot_y - distance_cm * math.sin(abs_angle_rad)  # y-axis is inverted in GUI
+            obj_y = cybot_y - distance_cm * math.cos(abs_angle_rad)
+            obj_x = cybot_x + distance_cm * math.sin(abs_angle_rad)  # y-axis is inverted in GUI
 
             # Diameter in cm = pixel size
             r = diameter_cm / 2

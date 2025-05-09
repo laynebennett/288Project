@@ -112,7 +112,4 @@ PDE_DEPS__QUOTED :=
 # Every subdirectory with source files must be described here
 SUBDIRS := \
 . \
-TacoBotGUI/2-simple\ client\ server\ starter\ code \
-TacoBotGUI/3-simple\ mock\ sensor\ client\ server\ starter\ code \
-TacoBotGUI/4-simple\ GUI\ mock\ sensor \
 
