@@ -267,6 +267,15 @@ def socket_thread():
                     scanBool = True
                     handle_scan(cybot, filename, filename2)
 
+                elif decoded == "l":
+                    plot_border_on_minimap(20, 17)
+                elif decoded == "fl":
+                    plot_border_on_minimap(80, 17)
+                elif decoded == "fr":
+                    plot_border_on_minimap(100, 17)
+                elif decoded == "r":
+                    plot_border_on_minimap(160, 17)
+
             except (socket.error, IOError) as e:
                 # No data available yet
                 pass
@@ -362,6 +371,36 @@ def plot_objects_on_minimap(scan_lines):
             )
         except Exception as e:
             print(f"Error parsing line '{line.strip()}': {e}")
+
+def plot_border_on_minimap(angle_b, distance_b):
+    global minimap_canvas, cybot_x, cybot_y, cybot_angle_deg
+
+
+        
+    rel_angle_deg = angle_b
+    distance_cm = distance_b + 2
+
+    # Convert to absolute angle based on bot's heading
+    abs_angle_deg = (cybot_angle_deg + rel_angle_deg) % 360 
+    abs_angle_rad = math.radians(abs_angle_deg)
+
+    # Convert polar to Cartesian (assuming 1 cm = 1 px for simplicity)
+    obj_y = cybot_y + distance_cm * math.cos(abs_angle_rad)
+    obj_x = cybot_x + distance_cm * math.sin(abs_angle_rad)  # y-axis is inverted in GUI
+
+    # Diameter in cm = pixel size
+    r = diameter_cm / 2
+
+    # Save object for future redraws
+    minimap_objects.append((obj_x, obj_y, r))
+
+    minimap_canvas.create_oval(
+        obj_x - 2, obj_y - 2,
+        obj_x + 2, obj_y + 2,
+        outline="red", width=2
+    )
+
+
 
 def parse_and_plot_scan_data_polar(lines):
     global canvas, ax

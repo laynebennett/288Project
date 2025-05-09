@@ -130,33 +130,33 @@ int main(void)
                         printWholeString(puttyString);
 
                     }
-                    /**RE-ENABLE THIS LATER. BOT WILL TRIGGER ON WHITE DOWNSTAIRS FLOOR BUT NOT UPSTAIRS FLOOR. <-----------------------------------------------------
+
                     if(sensor_data -> cliffLeftSignal > 2500){
-                        uart_sendStr("Border Left!\n");
+                        uart_sendStr("l\n");
                         set_wheels(-100,-100);
                         timer_waitMillis(500);
                         set_wheels(0,0);
 
                     }if(sensor_data -> cliffRightSignal > 2500){
-                        uart_sendStr("Border Right!\n");
+                        uart_sendStr("r\n");
                         set_wheels(-100,-100);
                         timer_waitMillis(500);
                         set_wheels(0,0);
 
                     }if(sensor_data -> cliffFrontLeftSignal > 2500){
-                        uart_sendStr("Border Front Left!\n");
+                        uart_sendStr("fl\n");
                         set_wheels(-100,-100);
                         timer_waitMillis(500);
                         set_wheels(0,0);
 
                     }if(sensor_data -> cliffFrontRightSignal > 2500){
-                        uart_sendStr("Border Front Right!\n");
+                        uart_sendStr("fr\n");
                         set_wheels(-100,-100);
                         timer_waitMillis(500);
                         set_wheels(0,0);
 
                     }
-                    */
+
 
         }
 
