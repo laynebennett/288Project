@@ -24,6 +24,9 @@ ORDERED_OBJS += \
 "./taco.obj" \
 "./tm4c123gh6pm_startup_ccs.obj" \
 "./uart-interrupt.obj" \
+"./TacoBotGUI/2-simple client server starter code/Simple-CyBot-echo.obj" \
+"./TacoBotGUI/3-simple mock sensor client server starter code/Simple-CyBot-echo.obj" \
+"./TacoBotGUI/4-simple GUI mock sensor/Simple-CyBot-echo.obj" \
 "../tm4c123gh6pm.cmd" \
 $(GEN_CMDS__FLAG) \
 -llibc.a \
@@ -37,7 +40,13 @@ RMDIR := RMDIR /S/Q
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include subdir_vars.mk
+-include TacoBotGUI/2-simple\ client\ server\ starter\ code/subdir_vars.mk
+-include TacoBotGUI/3-simple\ mock\ sensor\ client\ server\ starter\ code/subdir_vars.mk
+-include TacoBotGUI/4-simple\ GUI\ mock\ sensor/subdir_vars.mk
 -include subdir_rules.mk
+-include TacoBotGUI/2-simple\ client\ server\ starter\ code/subdir_rules.mk
+-include TacoBotGUI/3-simple\ mock\ sensor\ client\ server\ starter\ code/subdir_rules.mk
+-include TacoBotGUI/4-simple\ GUI\ mock\ sensor/subdir_rules.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -155,8 +164,8 @@ FINAL.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)
-	-$(RM) "Timer.obj" "adc.obj" "button.obj" "lcd.obj" "main.obj" "movement.obj" "open_interface.obj" "ping.obj" "putty.obj" "scan.obj" "servo.obj" "taco.obj" "tm4c123gh6pm_startup_ccs.obj" "uart-interrupt.obj" 
-	-$(RM) "Timer.d" "adc.d" "button.d" "lcd.d" "main.d" "movement.d" "open_interface.d" "ping.d" "putty.d" "scan.d" "servo.d" "taco.d" "tm4c123gh6pm_startup_ccs.d" "uart-interrupt.d" 
+	-$(RM) "Timer.obj" "adc.obj" "button.obj" "lcd.obj" "main.obj" "movement.obj" "open_interface.obj" "ping.obj" "putty.obj" "scan.obj" "servo.obj" "taco.obj" "tm4c123gh6pm_startup_ccs.obj" "uart-interrupt.obj" "TacoBotGUI\2-simple client server starter code\Simple-CyBot-echo.obj" "TacoBotGUI\3-simple mock sensor client server starter code\Simple-CyBot-echo.obj" "TacoBotGUI\4-simple GUI mock sensor\Simple-CyBot-echo.obj" 
+	-$(RM) "Timer.d" "adc.d" "button.d" "lcd.d" "main.d" "movement.d" "open_interface.d" "ping.d" "putty.d" "scan.d" "servo.d" "taco.d" "tm4c123gh6pm_startup_ccs.d" "uart-interrupt.d" "TacoBotGUI\2-simple client server starter code\Simple-CyBot-echo.d" "TacoBotGUI\3-simple mock sensor client server starter code\Simple-CyBot-echo.d" "TacoBotGUI\4-simple GUI mock sensor\Simple-CyBot-echo.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

@@ -139,7 +139,7 @@ bool fullScan(int interval, int totalDeg, int increment, int time_ms){ //NEEDS I
 
         //sprintf(printString, "\nobjCount: %i\n\n", objCount);
         //printWholeString(printString);
-
+        printWholeString("END\n");
 
         int q;
         for(q=1;q<=objCount;q++){//FIND SMALLEST OBJECT
@@ -158,9 +158,12 @@ bool fullScan(int interval, int totalDeg, int increment, int time_ms){ //NEEDS I
             //sprintf(printString, "Object %i: Angle = %f, Distance = %f, Width = %fdegrees, WidthCM = %f\n", q, objects[q].midAngle, objects[q].distance, objects[q].width, objects[q].widthCM);
             //printWholeString(printString);
 
+            sprintf(printString, "%f,%f,%f\n",objects[q].midAngle, objects[q].distance, objects[q].widthCM);
+            printWholeString(printString);
+
         }
 
-        printWholeString("END\n");
+        printWholeString("END2\n");
 
         return objDetect;
 

@@ -39,7 +39,7 @@ void supplyCustomers()
     while(tacos > 0)
     {
         // Scan for another customer to ensure it is there
-
+        uart_sendStr("z\n");
         if(fullScan(1, 180, 2, 100)){
             customerFound = true;
         }else{
@@ -75,7 +75,7 @@ void supplyCustomers()
             uart_sendStr("No customers found, do one more rescan to confirm ");
 
             // Scan once more
-
+            uart_sendStr("z\n");
             if(fullScan(1, 180, 2, 100)){
                 customerFound = true;
             }else{

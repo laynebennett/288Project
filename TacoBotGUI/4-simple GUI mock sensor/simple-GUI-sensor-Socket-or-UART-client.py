@@ -217,7 +217,7 @@ def socket_thread():
     print("Sent to server: " + send_message)
 
     while send_message != 'quit\n':
-        if send_message.strip() in ("e", "q"):
+        if send_message.strip() in ("e", "q") or decoded == "z":
             print("Requested Sensor scan from CyBot:\n")
             scan_lines = []
             scan_lines2 = []
