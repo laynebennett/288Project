@@ -13,6 +13,8 @@ from queue import Queue
 # Globals
 gui_send_message = "wait\n"
 scan_lines_to_plot = []
+scan_lines_to_map = []
+minimap_objects = []  # List of (x, y, r) tuples
 window = None
 canvas = None
 ax = None
@@ -20,7 +22,7 @@ message_box = None
 minimap_canvas = None
 cybot_x, cybot_y = 250, 250
 cybot_angle_deg = 90  # 90 is facing right
-step_distance = 2  # mm per step forward
+step_distance = 4  # cm per step forward
 movement_threads = {}  # To track active movement per command
 movement_flags = {}  # Control flags for movement threads
 stop_queue = Queue()  # Queue to hold stop commands ("x")
@@ -160,6 +162,7 @@ def reset_minimap_bot():
     global cybot_x, cybot_y, cybot_angle_deg
     cybot_x, cybot_y = 250, 250
     cybot_angle_deg = 90
+    minimap_objects.clear()
     draw_minimap()
 
 def draw_minimap():
@@ -170,7 +173,7 @@ def draw_minimap():
         minimap_canvas.create_line(i, 0, i, 500, fill="#ddd")
         minimap_canvas.create_line(0, i, 500, i, fill="#ddd")
 
-    bot_size = 10
+    bot_size = 20
     minimap_canvas.create_oval(cybot_x - bot_size, cybot_y - bot_size,
                                cybot_x + bot_size, cybot_y + bot_size,
                                fill="red")
@@ -179,6 +182,15 @@ def draw_minimap():
     end_x = cybot_x + 15 * math.cos(rad)
     end_y = cybot_y - 15 * math.sin(rad)
     minimap_canvas.create_line(cybot_x, cybot_y, end_x, end_y, fill="blue", width=2)
+
+    # Redraw stored objects
+    for obj_x, obj_y, r in minimap_objects:
+        minimap_canvas.create_oval(
+            obj_x - r, obj_y - r,
+            obj_x + r, obj_y + r,
+            outline="green", width=2
+        )
+
 
 def append_to_message_box(text):
     message_box.config(state=tk.NORMAL)
@@ -191,6 +203,7 @@ def socket_thread():
 
     absolute_path = os.path.dirname(__file__)
     filename = os.path.join(absolute_path, 'sensor-scan.txt')
+    filename2 = os.path.join(absolute_path, 'sensor-scan2.txt')
 
     HOST = "192.168.1.1"
     PORT = 288
@@ -207,6 +220,7 @@ def socket_thread():
         if send_message.strip() in ("e", "q") or decoded == "z":
             print("Requested Sensor scan from CyBot:\n")
             scan_lines = []
+            scan_lines2 = []
 
             with open(filename, 'w') as file_object:
                 while True:
@@ -226,9 +240,26 @@ def socket_thread():
                     file_object.flush()
                     scan_lines.append(decoded)
 
+            with open(filename2, 'w') as file_object:
+                while True:
+                    rx_message = cybot.readline()
+                    decoded = rx_message.decode()
+                    if decoded.strip() == "END2":
+                        break
+
+                    print(decoded.strip())
+                    file_object.write(decoded)
+                    file_object.flush()
+                    scan_lines2.append(decoded)
+
             scan_lines_to_plot.clear()
             scan_lines_to_plot.extend(scan_lines)
+            scan_lines_to_map.clear()
+            scan_lines_to_map.extend(scan_lines2)
             window.after(0, lambda: parse_and_plot_scan_data_polar(scan_lines_to_plot))
+            window.after(0, lambda: plot_objects_on_minimap(scan_lines_to_map))
+
+
         else:
             rx_message = cybot.readline()
             decoded = rx_message.decode().strip()
@@ -246,6 +277,38 @@ def socket_thread():
     time.sleep(2)
     cybot.close()
     cybot_socket.close()
+
+def plot_objects_on_minimap(scan_lines):
+    global minimap_canvas, cybot_x, cybot_y, cybot_angle_deg
+
+    for line in scan_lines:
+        try:
+            angle_str, distance_str, diameter_str = line.strip().split(",")
+            rel_angle_deg = float(angle_str)
+            distance_cm = float(distance_str) + 20
+            diameter_cm = float(diameter_str)
+
+            # Convert to absolute angle based on bot's heading
+            abs_angle_deg = (cybot_angle_deg - rel_angle_deg) % 360 
+            abs_angle_rad = math.radians(abs_angle_deg)
+
+            # Convert polar to Cartesian (assuming 1 cm = 1 px for simplicity)
+            obj_y = cybot_x + distance_cm * math.cos(abs_angle_rad)
+            obj_x = cybot_y - distance_cm * math.sin(abs_angle_rad)  # y-axis is inverted in GUI
+
+            # Diameter in cm = pixel size
+            r = diameter_cm / 2
+
+            # Save object for future redraws
+            minimap_objects.append((obj_x, obj_y, r))
+
+            minimap_canvas.create_oval(
+                obj_x - r, obj_y - r,
+                obj_x + r, obj_y + r,
+                outline="green", width=2
+            )
+        except Exception as e:
+            print(f"Error parsing line '{line.strip()}': {e}")
 
 def parse_and_plot_scan_data_polar(lines):
     global canvas, ax
