@@ -201,6 +201,11 @@ void UART1_Handler(void)
             {
                 command_flag = 9;
                 uart_sendChar('\n');
+            }else if(byte_received == 'p')//test
+            {
+                command_flag = 10;
+                uart_sendChar('\n');
+
             }else{//nothing
                 command_flag = 0;
             }

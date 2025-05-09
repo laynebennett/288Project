@@ -95,6 +95,11 @@ int main(void)
 
                     set_wheels(0, 0);
 
+        }else if(command_flag == 10){ //test
+                    command_flag = 0;
+
+                    move_forward_test (sensor_data);
+
 
         }else{
 
@@ -131,31 +136,32 @@ int main(void)
 
                     }
 
-                    if(sensor_data -> cliffLeftSignal > 2500){
+                    if(sensor_data -> cliffLeftSignal > 2700){
                         uart_sendStr("l\n");
                         set_wheels(-100,-100);
                         timer_waitMillis(500);
                         set_wheels(0,0);
 
-                    }if(sensor_data -> cliffRightSignal > 2500){
+                    }if(sensor_data -> cliffRightSignal > 2700){
                         uart_sendStr("r\n");
                         set_wheels(-100,-100);
                         timer_waitMillis(500);
                         set_wheels(0,0);
 
-                    }if(sensor_data -> cliffFrontLeftSignal > 2500){
+                    }if(sensor_data -> cliffFrontLeftSignal > 2700){
                         uart_sendStr("fl\n");
                         set_wheels(-100,-100);
                         timer_waitMillis(500);
                         set_wheels(0,0);
 
-                    }if(sensor_data -> cliffFrontRightSignal > 2500){
+                    }if(sensor_data -> cliffFrontRightSignal > 2700){
                         uart_sendStr("fr\n");
                         set_wheels(-100,-100);
                         timer_waitMillis(500);
                         set_wheels(0,0);
 
                     }
+
 
 
         }

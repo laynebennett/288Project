@@ -23,7 +23,7 @@ message_box = None
 minimap_canvas = None
 cybot_x, cybot_y = 250, 250
 cybot_angle_deg = 90  # 90 is facing right
-step_distance = 2.5  # cm per step forward
+step_distance = 2.55  # cm per step forward
 movement_threads = {}  # To track active movement per command
 movement_flags = {}  # Control flags for movement threads
 stop_queue = Queue()  # Queue to hold stop commands ("x")
@@ -86,6 +86,7 @@ def main():
     tk.Button(utility_frame, text="Scan", width=10, command=send_scan).pack(pady=2)
     tk.Button(utility_frame, text="Quick Scan", width=10, command=send_quick_scan).pack(pady=2)
     tk.Button(utility_frame, text="Reset Bot", width=10, command=reset_minimap_bot).pack(pady=2)
+    tk.Button(utility_frame, text="Test", width=10, command=send_test).pack(pady=2)
     tk.Button(utility_frame, text="Quit", width=10, command=send_quit).pack(pady=2)
 
     threading.Thread(target=socket_thread, daemon=True).start()
@@ -107,10 +108,9 @@ def start_movement(command_char):
         thread.start()
 
 def stop_movement(command_char):
+    message_queue.put("x") #ol reliable
     movement_flags[command_char] = False
-    stop_queue.put("x")  # Queue "x" for reliable stopping
-
-    process_stop_signal()
+    
 
 def process_stop_queue():
     global gui_send_message
@@ -128,9 +128,11 @@ def process_stop_signal():
 
 
 def movement_loop(command_char):
+    send_command(command_char)
     while movement_flags.get(command_char, False):
-        handle_command(command_char)
+        update_minimap(command_char)
         time.sleep(0.2)
+
 
 def send_quit():
     global gui_send_message
@@ -138,6 +140,11 @@ def send_quit():
     message_queue.put(gui_send_message)
     time.sleep(1)
     window.destroy()
+
+def send_test():
+    global gui_send_message
+    gui_send_message = "p"
+    message_queue.put(gui_send_message)
 
 def send_scan():
     global gui_send_message
@@ -170,9 +177,9 @@ def update_minimap(command_char):
         cybot_x -= step_distance * math.cos(rad)
         cybot_y += step_distance * math.sin(rad)
     elif command_char == "a":
-        cybot_angle_deg = (cybot_angle_deg + 6.3) % 360
+        cybot_angle_deg = (cybot_angle_deg + 5.69) % 360
     elif command_char == "d":
-        cybot_angle_deg = (cybot_angle_deg - 6.3) % 360
+        cybot_angle_deg = (cybot_angle_deg - 5.69) % 360
 
     draw_minimap()
 
@@ -205,11 +212,11 @@ def draw_minimap():
     minimap_canvas.create_line(cybot_x, cybot_y, end_x, end_y, fill="blue", width=2)
 
     # Redraw stored objects
-    for obj_x, obj_y, r in minimap_objects:
+    for obj_x, obj_y, r, color in minimap_objects:
         minimap_canvas.create_oval(
             obj_x - r, obj_y - r,
             obj_x + r, obj_y + r,
-            outline="green", width=2
+            outline=color, width=2
         )
 
 
@@ -221,6 +228,7 @@ def append_to_message_box(text):
 
 def socket_thread():
     global gui_send_message
+    global cybot_x, cybot_y, cybot_angle_deg, step_distance
     scanBool = False
 
     absolute_path = os.path.dirname(__file__)
@@ -266,15 +274,41 @@ def socket_thread():
                 if decoded == "z":
                     scanBool = True
                     handle_scan(cybot, filename, filename2)
+                    rad = math.radians(cybot_angle_deg)
+                    cybot_x -= 2.5*step_distance * math.cos(rad)
+                    cybot_y += 2.5*step_distance * math.sin(rad)
+
 
                 elif decoded == "l":
-                    plot_border_on_minimap(20, 17)
-                elif decoded == "fl":
-                    plot_border_on_minimap(80, 17)
-                elif decoded == "fr":
-                    plot_border_on_minimap(100, 17)
-                elif decoded == "r":
                     plot_border_on_minimap(160, 17)
+                    rad = math.radians(cybot_angle_deg)
+                    cybot_x -= 2.5*step_distance * math.cos(rad)
+                    cybot_y += 2.5*step_distance * math.sin(rad)
+
+                elif decoded == "fl":
+                    plot_border_on_minimap(100, 17)
+                    rad = math.radians(cybot_angle_deg)
+                    cybot_x -= 2.5*step_distance * math.cos(rad)
+                    cybot_y += 2.5*step_distance * math.sin(rad)
+
+                elif decoded == "fr":
+                    plot_border_on_minimap(80, 17)
+                    rad = math.radians(cybot_angle_deg)
+                    cybot_x -= 2.5*step_distance * math.cos(rad)
+                    cybot_y += 2.5*step_distance * math.sin(rad)
+
+                elif decoded == "r":
+                    plot_border_on_minimap(20, 17)
+                    rad = math.radians(cybot_angle_deg)
+                    cybot_x -= 2.5*step_distance * math.cos(rad)
+                    cybot_y += 2.5*step_distance * math.sin(rad)
+
+                elif decoded == "Hole!":
+                    plot_border_on_minimap(90, 17)
+                    rad = math.radians(cybot_angle_deg)
+                    cybot_x -= 2.5*step_distance * math.cos(rad)
+                    cybot_y += 2.5*step_distance * math.sin(rad)
+
 
             except (socket.error, IOError) as e:
                 # No data available yet
@@ -345,10 +379,11 @@ def plot_objects_on_minimap(scan_lines):
 
     for line in scan_lines:
         try:
-            angle_str, distance_str, diameter_str = line.strip().split(",")
+            angle_str, distance_str, diameter_str, customer_int_str = line.strip().split(",")
             rel_angle_deg = float(angle_str)
             distance_cm = float(distance_str) + .5 * float(diameter_str) + 10
             diameter_cm = float(diameter_str)
+            customer_int = int(customer_int_str)
 
             # Convert to absolute angle based on bot's heading
             abs_angle_deg = (cybot_angle_deg + rel_angle_deg) % 360 
@@ -361,13 +396,20 @@ def plot_objects_on_minimap(scan_lines):
             # Diameter in cm = pixel size
             r = diameter_cm / 2
 
+
+
+            if customer_int == 1:
+                print_color = "blue"
+            elif customer_int == 0:
+                print_color = "green"
+
             # Save object for future redraws
-            minimap_objects.append((obj_x, obj_y, r))
+            minimap_objects.append((obj_x, obj_y, r, print_color))
 
             minimap_canvas.create_oval(
                 obj_x - r, obj_y - r,
                 obj_x + r, obj_y + r,
-                outline="green", width=2
+                outline=print_color, width=2
             )
         except Exception as e:
             print(f"Error parsing line '{line.strip()}': {e}")
@@ -388,11 +430,8 @@ def plot_border_on_minimap(angle_b, distance_b):
     obj_y = cybot_y + distance_cm * math.cos(abs_angle_rad)
     obj_x = cybot_x + distance_cm * math.sin(abs_angle_rad)  # y-axis is inverted in GUI
 
-    # Diameter in cm = pixel size
-    r = diameter_cm / 2
-
     # Save object for future redraws
-    minimap_objects.append((obj_x, obj_y, r))
+    minimap_objects.append((obj_x, obj_y, 2, "red"))
 
     minimap_canvas.create_oval(
         obj_x - 2, obj_y - 2,

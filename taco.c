@@ -58,7 +58,7 @@ void supplyCustomers()
             // When a customer is scanned in, decrement 1 taco
             tacos--;
             lcd_printf("Tacos: %i", tacos);
-            timer_waitMillis(1000);
+            //timer_waitMillis(1000);
 
             if(tacos <= 0)
             {

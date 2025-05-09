@@ -52,3 +52,8 @@ double turn_left(oi_t *sensor_data, double degrees);
 * Brings set wheels function to movement for use instead of needing open_interface 
 */
 double set_wheels(double right, double left);
+
+/**
+ * to test move forward speed
+ */
+double move_forward_test (oi_t *sensor_data);

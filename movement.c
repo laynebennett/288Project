@@ -99,3 +99,26 @@ double set_wheels(double right, double left){
     return 0;
 
 }
+
+double move_forward_test (oi_t *sensor_data){
+    float sum = 0;
+
+     // right wheel, left wheel
+
+    oi_update(sensor_data);
+
+    oi_setWheels(150,150);
+
+    timer_waitMillis(1000);
+
+    oi_setWheels(0,0);
+
+    oi_update(sensor_data);
+
+    sum = sensor_data -> distance*.97;
+
+    lcd_printf("Step Distance: %0.4lf", sum / 50);
+
+
+    return sum/50; // Return distance travelled
+}
