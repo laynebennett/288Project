@@ -204,6 +204,8 @@ def append_to_message_box(text):
 def socket_thread():
     global gui_send_message
 
+    scanBool = False
+
     absolute_path = os.path.dirname(__file__)
     filename = os.path.join(absolute_path, 'sensor-scan.txt')
     filename2 = os.path.join(absolute_path, 'sensor-scan2.txt')
@@ -221,10 +223,11 @@ def socket_thread():
 
     while send_message != 'quit\n':
 
-        if send_message.strip() in ("e", "q"):
+        if send_message.strip() in ("e", "q") or scanBool == True:
             print("Requested Sensor scan from CyBot:\n")
             scan_lines = []
             scan_lines2 = []
+            scanBool = False
 
             with open(filename, 'w') as file_object:
                 while True:
@@ -270,6 +273,9 @@ def socket_thread():
             print("Received:", decoded)
             window.after(0, lambda msg=decoded: append_to_message_box(msg))
 
+            if decoded == "z":
+                scanBool = True
+
         while gui_send_message == "wait\n":
             time.sleep(.05)
 
@@ -289,15 +295,15 @@ def plot_objects_on_minimap(scan_lines):
         try:
             angle_str, distance_str, diameter_str = line.strip().split(",")
             rel_angle_deg = float(angle_str)
-            distance_cm = float(distance_str) + .5 * float(diameter_str)
+            distance_cm = float(distance_str) + .5 * float(diameter_str) + 17
             diameter_cm = float(diameter_str)
 
             # Convert to absolute angle based on bot's heading
-            abs_angle_deg = (cybot_angle_deg - rel_angle_deg) % 360 
+            abs_angle_deg = (cybot_angle_deg + rel_angle_deg) % 360 
             abs_angle_rad = math.radians(abs_angle_deg)
 
             # Convert polar to Cartesian (assuming 1 cm = 1 px for simplicity)
-            obj_y = cybot_y - distance_cm * math.cos(abs_angle_rad)
+            obj_y = cybot_y + distance_cm * math.cos(abs_angle_rad)
             obj_x = cybot_x + distance_cm * math.sin(abs_angle_rad)  # y-axis is inverted in GUI
 
             # Diameter in cm = pixel size
