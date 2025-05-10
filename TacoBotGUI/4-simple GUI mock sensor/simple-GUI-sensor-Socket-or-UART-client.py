@@ -15,7 +15,7 @@ import queue
 gui_send_message = "wait\n"
 scan_lines_to_plot = []
 scan_lines_to_map = []
-minimap_objects = []  # List of (x, y, r) tuples
+minimap_objects = []  # List of (x, y, r, c) tuples
 window = None
 canvas = None
 ax = None
@@ -23,7 +23,7 @@ message_box = None
 minimap_canvas = None
 cybot_x, cybot_y = 250, 250
 cybot_angle_deg = 90  # 90 is facing right
-step_distance = 2.55  # cm per step forward
+step_distance = 2.5  # cm per step forward
 movement_threads = {}  # To track active movement per command
 movement_flags = {}  # Control flags for movement threads
 stop_queue = Queue()  # Queue to hold stop commands ("x")
@@ -186,7 +186,7 @@ def update_minimap(command_char):
 def reset_minimap_bot():
     global cybot_x, cybot_y, cybot_angle_deg
     cybot_x, cybot_y = 250, 250
-    cybot_angle_deg = 0
+    #cybot_angle_deg = 0
     minimap_objects.clear()
     draw_minimap()
 
@@ -274,40 +274,41 @@ def socket_thread():
                 if decoded == "z":
                     scanBool = True
                     handle_scan(cybot, filename, filename2)
-                    rad = math.radians(cybot_angle_deg)
-                    cybot_x -= 2.5*step_distance * math.cos(rad)
-                    cybot_y += 2.5*step_distance * math.sin(rad)
 
+                elif decoded == "k":
+                    rad = math.radians(cybot_angle_deg)
+                    cybot_x -= 3*step_distance * math.cos(rad)
+                    cybot_y += 3*step_distance * math.sin(rad)
 
                 elif decoded == "l":
                     plot_border_on_minimap(160, 17)
                     rad = math.radians(cybot_angle_deg)
-                    cybot_x -= 2.5*step_distance * math.cos(rad)
-                    cybot_y += 2.5*step_distance * math.sin(rad)
+                    cybot_x -= 3*step_distance * math.cos(rad)
+                    cybot_y += 3*step_distance * math.sin(rad)
 
                 elif decoded == "fl":
                     plot_border_on_minimap(100, 17)
                     rad = math.radians(cybot_angle_deg)
-                    cybot_x -= 2.5*step_distance * math.cos(rad)
-                    cybot_y += 2.5*step_distance * math.sin(rad)
+                    cybot_x -= 3*step_distance * math.cos(rad)
+                    cybot_y += 3*step_distance * math.sin(rad)
 
                 elif decoded == "fr":
                     plot_border_on_minimap(80, 17)
                     rad = math.radians(cybot_angle_deg)
-                    cybot_x -= 2.5*step_distance * math.cos(rad)
-                    cybot_y += 2.5*step_distance * math.sin(rad)
+                    cybot_x -= 3*step_distance * math.cos(rad)
+                    cybot_y += 3*step_distance * math.sin(rad)
 
                 elif decoded == "r":
                     plot_border_on_minimap(20, 17)
                     rad = math.radians(cybot_angle_deg)
-                    cybot_x -= 2.5*step_distance * math.cos(rad)
-                    cybot_y += 2.5*step_distance * math.sin(rad)
+                    cybot_x -= 3*step_distance * math.cos(rad)
+                    cybot_y += 3*step_distance * math.sin(rad)
 
                 elif decoded == "Hole!":
                     plot_border_on_minimap(90, 17)
                     rad = math.radians(cybot_angle_deg)
-                    cybot_x -= 2.5*step_distance * math.cos(rad)
-                    cybot_y += 2.5*step_distance * math.sin(rad)
+                    cybot_x -= 3*step_distance * math.cos(rad)
+                    cybot_y += 3*step_distance * math.sin(rad)
 
 
             except (socket.error, IOError) as e:

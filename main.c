@@ -108,11 +108,12 @@ int main(void)
                     if (sensor_data -> bumpLeft != 0 || sensor_data -> bumpRight != 0)
                     {
                         curbFound = true;
-
                         //move back a bit and stop the bot. needed so the bump doesn't re-trigger
                         set_wheels(-100,-100);
                         timer_waitMillis(500);
                         set_wheels(0,0);
+
+                        uart_sendStr("k\n");
 
                         supplyCustomers();
 
@@ -136,26 +137,34 @@ int main(void)
 
                     }
 
-                    if(sensor_data -> cliffLeftSignal > 2700){
+                    if(sensor_data -> cliffLeftSignal > 2300){
                         uart_sendStr("l\n");
+                        sprintf(puttyString, "%u\n", sensor_data -> cliffLeftSignal);
+                        printWholeString(puttyString);
                         set_wheels(-100,-100);
                         timer_waitMillis(500);
                         set_wheels(0,0);
 
-                    }if(sensor_data -> cliffRightSignal > 2700){
+                    }if(sensor_data -> cliffRightSignal > 2650){
                         uart_sendStr("r\n");
+                        sprintf(puttyString, "%u\n", sensor_data -> cliffRightSignal);
+                        printWholeString(puttyString);
                         set_wheels(-100,-100);
                         timer_waitMillis(500);
                         set_wheels(0,0);
 
-                    }if(sensor_data -> cliffFrontLeftSignal > 2700){
+                    }if(sensor_data -> cliffFrontLeftSignal > 2650){
                         uart_sendStr("fl\n");
+                        sprintf(puttyString, "%u\n", sensor_data -> cliffFrontLeftSignal);
+                        printWholeString(puttyString);
                         set_wheels(-100,-100);
                         timer_waitMillis(500);
                         set_wheels(0,0);
 
-                    }if(sensor_data -> cliffFrontRightSignal > 2700){
+                    }if(sensor_data -> cliffFrontRightSignal > 2650){
                         uart_sendStr("fr\n");
+                        sprintf(puttyString, "%u\n", sensor_data -> cliffFrontRightSignal);
+                        printWholeString(puttyString);
                         set_wheels(-100,-100);
                         timer_waitMillis(500);
                         set_wheels(0,0);
