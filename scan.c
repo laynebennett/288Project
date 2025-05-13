@@ -28,7 +28,7 @@ struct Object { //struct for each object found
                 float widthCM;
                 float distance;
                 float midAngle;
-                bool customer;
+                int customer;
             };
 
 float get_IR_Dist(int i){
@@ -60,6 +60,8 @@ bool fullScan(int interval, int totalDeg, int increment, int time_ms){ //NEEDS I
     float distAvg;
 
     bool objDetect = false;
+
+    bool customerDetect = false;
 
     int objCount = 0;
 
@@ -139,7 +141,7 @@ bool fullScan(int interval, int totalDeg, int increment, int time_ms){ //NEEDS I
 
         //sprintf(printString, "\nobjCount: %i\n\n", objCount);
         //printWholeString(printString);
-
+        printWholeString("END\n");
 
         int q;
         for(q=1;q<=objCount;q++){//FIND SMALLEST OBJECT
@@ -149,20 +151,24 @@ bool fullScan(int interval, int totalDeg, int increment, int time_ms){ //NEEDS I
             objects[q].widthCM = 2*objects[q].distance*tan(objects[q].width*(3.14159)/360.0);
 
             if(objects[q].widthCM < 8){
-                objects[q].customer = true;
+                objects[q].customer = 1;
+                customerDetect = true;
                 //printWholeString("CUSTOMER FOUND\n");
             }else{
-                objects[q].customer = false;
+                objects[q].customer = 0;
             }
 
             //sprintf(printString, "Object %i: Angle = %f, Distance = %f, Width = %fdegrees, WidthCM = %f\n", q, objects[q].midAngle, objects[q].distance, objects[q].width, objects[q].widthCM);
             //printWholeString(printString);
 
+            sprintf(printString, "%f,%f,%f,%i\n",objects[q].midAngle, objects[q].distance, objects[q].widthCM, objects[q].customer);
+            printWholeString(printString);
+
         }
 
-        printWholeString("END\n");
+        printWholeString("END2\n");
 
-        return objDetect;
+        return customerDetect;
 
 }
 

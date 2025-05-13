@@ -2,7 +2,7 @@
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_Kv4R8ScMEfC4Q-Dg_LGKRQ" elementId="org.eclipse.e4.legacy.ide.application" contributorURI="platform:/plugin/org.eclipse.ui.workbench" selectedElement="_Kv4R8icMEfC4Q-Dg_LGKRQ" bindingContexts="_Kv4R-ycMEfC4Q-Dg_LGKRQ">
   <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;workbench>&#xD;&#xA;&lt;mruList/>&#xD;&#xA;&lt;/workbench>"/>
   <tags>activeSchemeId:com.ti.ccstudio.ui.keyBindingScheme</tags>
-  <children xsi:type="basic:TrimmedWindow" xmi:id="_Kv4R8icMEfC4Q-Dg_LGKRQ" elementId="IDEWindow" contributorURI="platform:/plugin/org.eclipse.ui.workbench" selectedElement="_K6V1gicMEfC4Q-Dg_LGKRQ" x="514" y="-16" width="1024" height="768">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_Kv4R8icMEfC4Q-Dg_LGKRQ" elementId="IDEWindow" contributorURI="platform:/plugin/org.eclipse.ui.workbench" selectedElement="_K6V1gicMEfC4Q-Dg_LGKRQ" x="0" y="0" width="1024" height="768">
     <persistedState key="coolBarVisible" value="true"/>
     <persistedState key="perspectiveBarVisible" value="true"/>
     <persistedState key="isRestored" value="true"/>
@@ -62,11 +62,12 @@
           <tags>persp.newWizSC:com.ti.ccstudio.project.ui.wizards.project.NewCCSProjectWizard</tags>
           <tags>persp.actionSet:com.ti.ccstudio.project.ui.projectActionSet</tags>
           <tags>persp.actionSet:com.ti.ccstudio.project.ui.projectBuildActionSet</tags>
-          <children xsi:type="basic:PartSashContainer" xmi:id="_K_tdtCcMEfC4Q-Dg_LGKRQ" selectedElement="_K_tduicMEfC4Q-Dg_LGKRQ" horizontal="true">
+          <children xsi:type="basic:PartSashContainer" xmi:id="_K_tdtCcMEfC4Q-Dg_LGKRQ" selectedElement="_K_tdtScMEfC4Q-Dg_LGKRQ" horizontal="true">
             <children xsi:type="basic:PartSashContainer" xmi:id="_K_tdtScMEfC4Q-Dg_LGKRQ" visible="false" containerData="3000" selectedElement="_K_tdticMEfC4Q-Dg_LGKRQ">
               <children xsi:type="basic:PartStack" xmi:id="_K_tdticMEfC4Q-Dg_LGKRQ" elementId="left" visible="false" containerData="5000" selectedElement="_K_tdtycMEfC4Q-Dg_LGKRQ">
                 <tags>Minimized</tags>
                 <tags>MinimizedByZoom</tags>
+                <tags>active</tags>
                 <children xsi:type="advanced:Placeholder" xmi:id="_K_tdtycMEfC4Q-Dg_LGKRQ" elementId="org.eclipse.ui.navigator.ProjectExplorer" ref="_K_jtFicMEfC4Q-Dg_LGKRQ" closeable="true">
                   <tags>View</tags>
                   <tags>categoryTag:General</tags>
@@ -214,8 +215,6 @@
       <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;view/>"/>
       <tags>View</tags>
       <tags>categoryTag:General</tags>
-      <tags>active</tags>
-      <tags>activeOnClose</tags>
       <menus xmi:id="_LHm1cCcMEfC4Q-Dg_LGKRQ" elementId="org.eclipse.ui.internal.introview">
         <tags>ViewMenu</tags>
         <tags>menuContribution:menu</tags>
@@ -229,12 +228,11 @@
       <tags>categoryTag:Help</tags>
     </sharedElements>
     <sharedElements xsi:type="advanced:Area" xmi:id="_K_Z7sCcMEfC4Q-Dg_LGKRQ" elementId="org.eclipse.ui.editorss" selectedElement="_K_Z7sScMEfC4Q-Dg_LGKRQ">
-      <children xsi:type="basic:PartStack" xmi:id="_K_Z7sScMEfC4Q-Dg_LGKRQ" elementId="org.eclipse.e4.primaryDataStack" selectedElement="_K_tdsScMEfC4Q-Dg_LGKRQ">
+      <children xsi:type="basic:PartStack" xmi:id="_K_Z7sScMEfC4Q-Dg_LGKRQ" elementId="org.eclipse.e4.primaryDataStack">
         <tags>org.eclipse.e4.primaryDataStack</tags>
         <tags>EditorStack</tags>
-        <tags>active</tags>
         <tags>Maximized</tags>
-        <children xsi:type="advanced:Placeholder" xmi:id="_K_tdsScMEfC4Q-Dg_LGKRQ" elementId="org.eclipse.ui.internal.introview" ref="_K6V1gCcMEfC4Q-Dg_LGKRQ" closeable="true">
+        <children xsi:type="advanced:Placeholder" xmi:id="_K_tdsScMEfC4Q-Dg_LGKRQ" elementId="org.eclipse.ui.internal.introview" toBeRendered="false" ref="_K6V1gCcMEfC4Q-Dg_LGKRQ" closeable="true">
           <tags>View</tags>
           <tags>categoryTag:General</tags>
         </children>
@@ -246,6 +244,7 @@
       <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;view CommonNavigator.LINKING_ENABLED=&quot;0&quot; org.eclipse.cdt.ui.cview.groupincludes=&quot;false&quot; org.eclipse.cdt.ui.cview.groupmacros=&quot;false&quot; org.eclipse.cdt.ui.editor.CUChildren=&quot;true&quot; org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets=&quot;0&quot;>&#xD;&#xA;&lt;lastRecentlyUsedFilters/>&#xD;&#xA;&lt;/view>"/>
       <tags>View</tags>
       <tags>categoryTag:General</tags>
+      <tags>active</tags>
       <menus xmi:id="_LBgNcCcMEfC4Q-Dg_LGKRQ" elementId="org.eclipse.ui.navigator.ProjectExplorer">
         <tags>ViewMenu</tags>
         <tags>menuContribution:menu</tags>
@@ -379,7 +378,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_K7r5UicMEfC4Q-Dg_LGKRQ" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_K71DRycMEfC4Q-Dg_LGKRQ" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_KwU_DScMEfC4Q-Dg_LGKRQ"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_FZtJVyywEfCieNoJp8uUHg" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_KwU_DScMEfC4Q-Dg_LGKRQ"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_K7r5UycMEfC4Q-Dg_LGKRQ" elementId="group.edit" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -410,7 +409,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_K7r5WicMEfC4Q-Dg_LGKRQ" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_K71DVCcMEfC4Q-Dg_LGKRQ" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_KwU-hCcMEfC4Q-Dg_LGKRQ"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_FZtJZCywEfCieNoJp8uUHg" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_KwU-hCcMEfC4Q-Dg_LGKRQ"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_K7r5WycMEfC4Q-Dg_LGKRQ" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -448,6 +447,7 @@
       <children xsi:type="menu:ToolControl" xmi:id="_LoSgoCcMEfC4Q-Dg_LGKRQ" elementId="left(IDEWindow).(com.ti.ccstudio.TICPerspective)" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.addons.swt/org.eclipse.e4.ui.workbench.addons.minmax.TrimStack">
         <tags>TrimStack</tags>
         <tags>Draggable</tags>
+        <tags>MinimizedAndShowing</tags>
       </children>
       <children xsi:type="menu:ToolControl" xmi:id="_LoZ1YCcMEfC4Q-Dg_LGKRQ" elementId="bottomRight(IDEWindow).(com.ti.ccstudio.TICPerspective)" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.addons.swt/org.eclipse.e4.ui.workbench.addons.minmax.TrimStack">
         <tags>TrimStack</tags>

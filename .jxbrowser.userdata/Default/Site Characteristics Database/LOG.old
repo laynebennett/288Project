@@ -1,0 +1,5 @@
+2025/05/09-03:30:23.083 1cb8 Log #3: 2 ops saved to Table #4 OK
+2025/05/09-03:30:23.089 1cb8 Archiving X:\CPRE288\FINAL\.jxbrowser.userdata\Default\Site Characteristics Database/000003.log: OK
+2025/05/09-03:30:23.089 1cb8 Table #4: 2 entries OK
+2025/05/09-03:30:23.097 1cb8 Archiving X:\CPRE288\FINAL\.jxbrowser.userdata\Default\Site Characteristics Database/MANIFEST-000001: OK
+2025/05/09-03:30:23.128 1cb8 **** Repaired leveldb X:\CPRE288\FINAL\.jxbrowser.userdata\Default\Site Characteristics Database; recovered 1 files; 191 bytes. Some data may have been lost. ****
