@@ -9,6 +9,7 @@ There is a taped-out home square where the robot will go to restock food (a vari
 While driving on the road, occasionally there will be obstacles like walking pedestrians (small width objects) or a collapsed tree (large width object) that the cybot will need to either navigate around or wait out before continuing to either the home or to the drop off zone. 
 
 **Implementation**
+
 The CyBot is an iRobot Roomba 600 controlled via a Tiva TM4C123GH6PM and controlled via wifi input using PuTTY. On the CyBot utilizes an IR sensor mounted on a servo, and various other sensors mentioned in the iRobot Create 2 OI. The GUI is written in Python and run in VScode. 
 
 See https://class.ece.iastate.edu/cpre288/resources.asp for hardware specifictions
