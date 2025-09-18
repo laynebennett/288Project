@@ -1,5 +1,14 @@
 # 2880-Final-Project
 
+##Short Description
+There is a taped-out home square where the robot will go to restock food (a variable to keep track of the truck’s stock will be refreshed). The CyBot will drive down the road until it sees a medium sized object (a road sign in this case) which will indicate for the robot to turn. Once the robot travels to the drop off point, it will park against the curb (short sized objects). The CyBot will scan to see if there is a customer in line on the other side of the curb. If there is a customer, we subtract the food stock variable by 1. If we run out of food and there are still people, we drive back to the home square to refresh our stock and drive back to the drop off zone until there are no more customers left. 
+
+While driving on the road, occasionally there will be obstacles like walking pedestrians (small width objects) or a collapsed tree (large width object) that the cybot will need to either navigate around or wait out before continuing to either the home or to the drop off zone. 
+
+##Implementation
+The CyBot is an iRobot Roomba 600 controlled via a Tiva TM4C123GH6PM and controlled via wifi input using PuTTY. On the CyBot utilizes an IR sensor mounted on a servo, and various other sensors mentioned in the iRobot Create 2 OI. The GUI is written in Python and run in VScode. 
+
+
 ## Git mini-tutorial
 ### Getting the repo locally
 First, go to a terminal of choice (assuming that you have git installed on your computer). This works with the typical windows terminal, but git bash is my preferred terminal
